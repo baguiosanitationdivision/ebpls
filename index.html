@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>eBPLS — BHD Clearance Application</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="form-card">
+
+    <!-- Header -->
+    <div class="form-header">
+      <div class="form-header-icon">
+        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="2" width="14" height="16" rx="2" stroke="#888" stroke-width="1.2"/>
+          <line x1="6" y1="7" x2="14" y2="7" stroke="#888" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="6" y1="10" x2="14" y2="10" stroke="#888" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="6" y1="13" x2="10" y2="13" stroke="#888" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="form-title">eBPLS BHD Clearance Application Form</div>
+      </div>
+    </div>
+
+    <!-- Section 1: Application Type -->
+    <div class="section">
+      <div class="section-label">
+        <div class="section-num">1</div>
+        <div class="section-title">Application type <span class="toggle-hint">Select one</span></div>
+      </div>
+      <div class="checkbox-group" id="app-type-row">
+        <label class="checkbox-option">
+          <input type="radio" name="app-type" value="Renew" checked>
+          <span class="checkbox-box"></span>
+          <span class="checkbox-label">Renew</span>
+        </label>
+        <label class="checkbox-option">
+          <input type="radio" name="app-type" value="New">
+          <span class="checkbox-box"></span>
+          <span class="checkbox-label">New</span>
+        </label>
+        <label class="checkbox-option">
+          <input type="radio" name="app-type" value="Additional Line of Business">
+          <span class="checkbox-box"></span>
+          <span class="checkbox-label">Additional Line of Business</span>
+        </label>
+        <label class="checkbox-option">
+          <input type="radio" name="app-type" value="Change Location">
+          <span class="checkbox-box"></span>
+          <span class="checkbox-label">Change Location</span>
+        </label>
+        <label class="checkbox-option">
+          <input type="radio" name="app-type" value="Change of Management">
+          <span class="checkbox-box"></span>
+          <span class="checkbox-label">Change of Management</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Section 2: Personal Information -->
+    <div class="section">
+      <div class="section-label">
+        <div class="section-num">2</div>
+        <div class="section-title">Personal information</div>
+      </div>
+
+      <div class="checkbox-group" id="owner-type-row" style="margin-bottom: 14px;">
+        <label class="checkbox-option">
+          <input type="radio" name="owner-type" value="sole" checked onchange="setOwnerType('sole')">
+          <span class="checkbox-box"></span>
+          <span class="checkbox-label">Single Proprietor</span>
+        </label>
+        <label class="checkbox-option">
+          <input type="radio" name="owner-type" value="corp" onchange="setOwnerType('corp')">
+          <span class="checkbox-box"></span>
+          <span class="checkbox-label">Corporation / Partnership</span>
+        </label>
+      </div>
+
+      <div id="owner-sole">
+        <div class="field-row cols-4">
+          <div class="field-group">
+            <label>Owner's last name</label>
+            <input type="text" id="last-name" placeholder="Last name">
+          </div>
+          <div class="field-group">
+            <label>Owner's first name</label>
+            <input type="text" id="first-name" placeholder="First name">
+          </div>
+          <div class="field-group">
+            <label>Owner's middle name</label>
+            <input type="text" id="middle-name" placeholder="Optional">
+          </div>
+          <div class="field-group">
+            <label>Suffix</label>
+            <input type="text" id="suffix" placeholder="Optional">
+          </div>
+        </div>
+      </div>
+
+      <div id="owner-corp" style="display: none;">
+        <div class="field-row cols-1">
+          <div class="field-group">
+            <label>Registered business name</label>
+            <input type="text" id="corp-name" placeholder="Full registered corporate / partnership name">
+          </div>
+        </div>
+      </div>
+
+      <div class="field-row cols-1" style="margin-top: 0;">
+        <div class="field-group">
+          <label>Owner's contact number</label>
+          <input type="tel" id="contact" placeholder="e.g. 09XX XXX XXXX">
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Section 3: Business Information -->
+    <div class="section">
+      <div class="section-label">
+        <div class="section-num">3</div>
+        <div class="section-title">Business / Establishment Information</div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field-group">
+          <label>Tradename / Business Name</label>
+          <input type="text" id="business-name" placeholder="Registered business name">
+        </div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field-group">
+          <label>Business Address</label>
+          <input type="text" id="address" placeholder="Street address, building, unit">
+        </div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field-group">
+          <label>Barangay</label>
+          <div class="autocomplete-wrapper">
+            <input type="text" id="barangay-input" placeholder="Type to search barangay..." autocomplete="off">
+            <ul id="barangay-dropdown" class="autocomplete-dropdown" hidden></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field-group">
+          <label>Line of business</label>
+          <input type="text" id="lob-select" placeholder="e.g. Sari-Sari Store…">
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast" hidden></div>
+
+    <!-- Actions -->
+    <div class="submit-row">
+      <button class="btn-secondary" onclick="clearForm()">Clear form</button>
+      <button class="btn-primary" id="submit-btn" onclick="submitForm()">
+        <span id="submit-text">Submit application</span>
+        <span id="submit-spinner" class="spinner" hidden></span>
+      </button>
+    </div>
+
+  </div>
+
+  <script src="config.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
