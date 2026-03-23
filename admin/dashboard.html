@@ -46,11 +46,7 @@
       z-index: 50;
     }
 
-    .topbar-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .topbar-left { display: flex; align-items: center; gap: 12px; }
 
     .topbar-icon {
       width: 32px; height: 32px;
@@ -60,21 +56,12 @@
       display: flex; align-items: center; justify-content: center;
     }
 
-    .topbar-title {
-      font-size: 14px;
-      font-weight: 500;
-    }
+    .topbar-title { font-size: 14px; font-weight: 500; }
 
-    .topbar-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
 
     .admin-badge {
-      display: flex;
-      align-items: center;
-      gap: 7px;
+      display: flex; align-items: center; gap: 7px;
       padding: 5px 10px;
       background: var(--bg);
       border: 0.5px solid var(--border);
@@ -82,11 +69,7 @@
       font-size: 12px;
     }
 
-    .admin-dot {
-      width: 7px; height: 7px;
-      background: #43a047;
-      border-radius: 50%;
-    }
+    .admin-dot { width: 7px; height: 7px; background: #43a047; border-radius: 50%; }
 
     .btn-sm {
       padding: 6px 14px;
@@ -97,26 +80,15 @@
       transition: all 0.15s;
     }
 
-    .btn-outline {
-      border: 0.5px solid var(--border);
-      background: transparent;
-      color: var(--text-muted);
-    }
+    .btn-outline { border: 0.5px solid var(--border); background: transparent; color: var(--text-muted); }
     .btn-outline:hover { background: var(--bg); }
 
-    .btn-dark {
-      border: none;
-      background: var(--accent);
-      color: #fff;
-      font-weight: 500;
-    }
+    .btn-dark { border: none; background: var(--accent); color: #fff; font-weight: 500; }
     .btn-dark:hover { opacity: 0.82; }
     .btn-dark:disabled { opacity: 0.4; cursor: not-allowed; }
 
     .btn-report {
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      display: flex; align-items: center; gap: 6px;
       border: 0.5px solid var(--border);
       background: var(--surface);
       color: var(--text);
@@ -125,11 +97,7 @@
     .btn-report:hover { background: var(--bg); }
 
     /* ── Main layout ── */
-    .main {
-      padding: 24px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
+    .main { padding: 24px; max-width: 1400px; margin: 0 auto; }
 
     /* ── Stats row ── */
     .stats-row {
@@ -146,61 +114,34 @@
       padding: 14px 16px;
     }
 
-    .stat-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-
-    .stat-value {
-      font-size: 24px;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-    }
+    .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 6px; }
+    .stat-value { font-size: 24px; font-weight: 500; letter-spacing: -0.02em; }
 
     /* ── Toolbar ── */
     .toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; margin-bottom: 14px; flex-wrap: wrap;
     }
 
     .search-input {
-      height: 34px;
-      padding: 0 10px;
-      border: 0.5px solid var(--border);
-      border-radius: 7px;
+      height: 34px; padding: 0 10px;
+      border: 0.5px solid var(--border); border-radius: 7px;
       background: var(--surface);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 12.5px;
-      color: var(--text);
-      outline: none;
-      min-width: 220px;
+      font-family: 'DM Sans', sans-serif; font-size: 12.5px; color: var(--text);
+      outline: none; min-width: 220px;
       transition: border-color 0.15s;
     }
     .search-input:focus { border-color: #aaa; }
     .search-input::placeholder { color: var(--text-faint); }
 
     .filter-select {
-      height: 34px;
-      padding: 0 28px 0 10px;
-      border: 0.5px solid var(--border);
-      border-radius: 7px;
+      height: 34px; padding: 0 28px 0 10px;
+      border: 0.5px solid var(--border); border-radius: 7px;
       background: var(--surface);
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 8px center;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 12.5px;
-      color: var(--text);
-      cursor: pointer;
-      outline: none;
-      appearance: none;
+      background-repeat: no-repeat; background-position: right 8px center;
+      font-family: 'DM Sans', sans-serif; font-size: 12.5px; color: var(--text);
+      cursor: pointer; outline: none; appearance: none;
     }
 
     /* ── Table ── */
@@ -213,62 +154,65 @@
 
     .table-scroll { overflow-x: auto; }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12.5px;
-    }
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
 
-    thead {
-      background: var(--bg);
-      border-bottom: 0.5px solid var(--border);
-    }
+    thead { background: var(--bg); border-bottom: 0.5px solid var(--border); }
 
     th {
-      padding: 10px 14px;
-      text-align: left;
-      font-size: 10px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--text-muted);
-      white-space: nowrap;
+      padding: 10px 14px; text-align: left;
+      font-size: 10px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      color: var(--text-muted); white-space: nowrap;
     }
 
     td {
       padding: 11px 14px;
       border-bottom: 0.5px solid var(--border-light);
-      color: var(--text);
-      vertical-align: middle;
+      color: var(--text); vertical-align: middle;
     }
 
     tr:last-child td { border-bottom: none; }
     tr:hover td { background: #fafaf8; }
 
-    .cell-id {
-      font-family: monospace;
-      font-size: 11px;
-      color: var(--text-muted);
-    }
+    .cell-id { font-family: monospace; font-size: 11px; color: var(--text-muted); }
+    .cell-ts { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+    .cell-name { font-weight: 500; }
 
-    .cell-ts {
-      font-size: 11px;
+    /* ── Audit trail in table ── */
+    .audit-trail {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 10.5px;
       color: var(--text-muted);
       white-space: nowrap;
     }
-
-    .cell-name { font-weight: 500; }
+    .audit-dot {
+      display: inline-block;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      margin-right: 4px;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+    .audit-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .audit-label {
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-faint);
+      min-width: 56px;
+    }
 
     /* ── Status badges ── */
     .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 3px 9px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 500;
-      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 9px; border-radius: 20px;
+      font-size: 11px; font-weight: 500; white-space: nowrap;
     }
 
     .status-ForInspection    { background: #e8eaf6; color: #3949ab; }
@@ -277,48 +221,31 @@
     .status-Disapproved      { background: #ffebee; color: #c62828; }
 
     .edit-btn {
-      padding: 5px 12px;
-      border-radius: 6px;
-      border: 0.5px solid var(--border);
-      background: transparent;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11.5px;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.12s;
+      padding: 5px 12px; border-radius: 6px;
+      border: 0.5px solid var(--border); background: transparent;
+      font-family: 'DM Sans', sans-serif; font-size: 11.5px; color: var(--text-muted);
+      cursor: pointer; transition: all 0.12s;
     }
     .edit-btn:hover { background: var(--bg); color: var(--text); }
 
-    .empty-state {
-      text-align: center;
-      padding: 48px 24px;
-      color: var(--text-muted);
-    }
-
+    .empty-state { text-align: center; padding: 48px 24px; color: var(--text-muted); }
     .empty-label { font-size: 13px; }
 
     /* ── Pagination ── */
     .pagination {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 12px 14px;
       border-top: 0.5px solid var(--border-light);
-      font-size: 12px;
-      color: var(--text-muted);
+      font-size: 12px; color: var(--text-muted);
     }
 
     .page-btns { display: flex; gap: 4px; }
 
     .page-btn {
-      width: 28px; height: 28px;
-      border-radius: 6px;
-      border: 0.5px solid var(--border);
-      background: transparent;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 12px;
-      cursor: pointer;
-      transition: all 0.12s;
+      width: 28px; height: 28px; border-radius: 6px;
+      border: 0.5px solid var(--border); background: transparent;
+      font-family: 'DM Sans', sans-serif; font-size: 12px;
+      cursor: pointer; transition: all 0.12s;
     }
     .page-btn:hover { background: var(--bg); }
     .page-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
@@ -328,29 +255,21 @@
     .modal-overlay {
       position: fixed; inset: 0;
       background: rgba(0,0,0,0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 200;
-      padding: 20px;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 200; padding: 20px;
       backdrop-filter: blur(2px);
     }
 
     .modal {
-      background: var(--surface);
-      border-radius: 14px;
+      background: var(--surface); border-radius: 14px;
       border: 0.5px solid var(--border);
-      width: 100%;
-      max-width: 560px;
-      max-height: 90vh;
-      overflow-y: auto;
+      width: 100%; max-width: 580px;
+      max-height: 90vh; overflow-y: auto;
       box-shadow: 0 8px 40px rgba(0,0,0,0.14);
     }
 
     .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 18px 20px 14px;
       border-bottom: 0.5px solid var(--border-light);
     }
@@ -358,110 +277,132 @@
     .modal-title { font-size: 14px; font-weight: 500; }
 
     .modal-close {
-      width: 28px; height: 28px;
-      border-radius: 7px;
-      border: 0.5px solid var(--border);
-      background: transparent;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--text-muted);
-      font-size: 16px;
-      line-height: 1;
+      width: 28px; height: 28px; border-radius: 7px;
+      border: 0.5px solid var(--border); background: transparent;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted); font-size: 16px; line-height: 1;
     }
     .modal-close:hover { background: var(--bg); }
 
     .modal-body { padding: 18px 20px; }
 
     .modal-section {
-      margin-bottom: 16px;
-      padding-bottom: 16px;
+      margin-bottom: 16px; padding-bottom: 16px;
       border-bottom: 0.5px solid var(--border-light);
     }
     .modal-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
     .modal-section-title {
-      font-size: 10px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--text-muted);
-      margin-bottom: 10px;
+      font-size: 10px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      color: var(--text-muted); margin-bottom: 10px;
     }
 
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px 16px;
-    }
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
 
-    .info-item {}
     .info-key {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-faint);
-      margin-bottom: 2px;
+      font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 2px;
     }
     .info-val { font-size: 13px; }
+
+    /* ── Audit timeline in modal ── */
+    .audit-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .audit-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      position: relative;
+      padding-bottom: 16px;
+    }
+
+    .audit-step:last-child { padding-bottom: 0; }
+
+    .audit-step::before {
+      content: '';
+      position: absolute;
+      left: 11px;
+      top: 22px;
+      bottom: 0;
+      width: 1px;
+      background: var(--border-light);
+    }
+    .audit-step:last-child::before { display: none; }
+
+    .audit-step-icon {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .audit-step-icon.done { border-color: transparent; }
+
+    .audit-step-content { padding-top: 3px; }
+
+    .audit-step-label {
+      font-size: 11px; font-weight: 500;
+      color: var(--text); margin-bottom: 2px;
+    }
+
+    .audit-step-time {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .audit-step-pending {
+      font-size: 11px;
+      color: var(--text-faint);
+      font-style: italic;
+    }
 
     .modal-field { margin-bottom: 10px; }
 
     .modal-field label {
-      display: block;
-      font-size: 10px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--text-muted);
-      margin-bottom: 5px;
+      display: block; font-size: 10px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      color: var(--text-muted); margin-bottom: 5px;
     }
 
     .modal-field input,
     .modal-field select,
     .modal-field textarea {
-      width: 100%;
-      padding: 8px 11px;
-      border: 0.5px solid var(--border);
-      border-radius: 8px;
+      width: 100%; padding: 8px 11px;
+      border: 0.5px solid var(--border); border-radius: 8px;
       background: var(--surface);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.15s;
-      appearance: none;
+      font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text);
+      outline: none; transition: border-color 0.15s; appearance: none;
     }
 
     .modal-field select {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-      padding-right: 30px;
+      background-repeat: no-repeat; background-position: right 10px center; padding-right: 30px;
     }
 
-    .modal-field textarea {
-      height: 72px;
-      resize: vertical;
-    }
+    .modal-field textarea { height: 72px; resize: vertical; }
 
     .modal-field input:focus,
     .modal-field select:focus,
     .modal-field textarea:focus { border-color: #aaa; }
 
     .status-hint {
-      display: inline-flex;
-      align-items: center;
-      margin-top: 6px;
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 500;
+      display: inline-flex; align-items: center;
+      margin-top: 6px; padding: 3px 10px;
+      border-radius: 20px; font-size: 11px; font-weight: 500;
     }
 
     .modal-footer {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
+      display: flex; justify-content: flex-end; gap: 8px;
       padding: 14px 20px;
       border-top: 0.5px solid var(--border-light);
     }
@@ -472,18 +413,12 @@
 
     /* ── Toast ── */
     .toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
+      position: fixed; bottom: 24px; left: 50%;
       transform: translateX(-50%);
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      z-index: 999;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-      animation: slideUp 0.2s ease;
-      white-space: nowrap;
+      padding: 10px 20px; border-radius: 8px;
+      font-size: 13px; font-weight: 500;
+      z-index: 999; box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      animation: slideUp 0.2s ease; white-space: nowrap;
     }
     .toast-success { background: #1a1a1a; color: #fff; }
     .toast-error   { background: #e53935; color: #fff; }
@@ -495,47 +430,25 @@
     .spinner {
       width: 13px; height: 13px;
       border: 2px solid rgba(255,255,255,0.3);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      display: inline-block;
+      border-top-color: #fff; border-radius: 50%;
+      animation: spin 0.7s linear infinite; display: inline-block;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    .loading-row td {
-      text-align: center;
-      padding: 40px;
-      color: var(--text-muted);
-    }
+    .loading-row td { text-align: center; padding: 40px; color: var(--text-muted); }
 
     /* ── Report Modal ── */
-    .report-type-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 4px;
-    }
+    .report-type-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 4px; }
 
     .report-type-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 7px;
-      padding: 14px 10px 12px;
-      border-radius: 10px;
-      border: 0.5px solid var(--border);
-      background: var(--surface);
+      display: flex; flex-direction: column; align-items: center; gap: 7px;
+      padding: 14px 10px 12px; border-radius: 10px;
+      border: 0.5px solid var(--border); background: var(--surface);
       font-family: 'DM Sans', sans-serif;
-      cursor: pointer;
-      transition: all 0.15s;
-      text-align: center;
+      cursor: pointer; transition: all 0.15s; text-align: center;
     }
     .report-type-btn:hover { background: var(--bg); }
-    .report-type-btn.active {
-      border-color: var(--accent);
-      background: var(--accent);
-      color: #fff;
-    }
+    .report-type-btn.active { border-color: var(--accent); background: var(--accent); color: #fff; }
     .report-type-btn.active .rtype-icon { color: #fff; opacity: 0.8; }
     .report-type-btn.active .rtype-label { color: #fff; }
     .report-type-btn.active .rtype-desc { color: rgba(255,255,255,0.6); }
@@ -544,20 +457,12 @@
     .rtype-label { font-size: 12px; font-weight: 500; color: var(--text); }
     .rtype-desc { font-size: 10px; color: var(--text-muted); line-height: 1.3; }
 
-    .date-range-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
+    .date-range-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
     .report-preview-note {
-      font-size: 11.5px;
-      color: var(--text-muted);
-      background: var(--bg);
-      border-radius: 7px;
-      padding: 9px 12px;
-      border: 0.5px solid var(--border-light);
-      margin-top: 4px;
+      font-size: 11.5px; color: var(--text-muted);
+      background: var(--bg); border-radius: 7px;
+      padding: 9px 12px; border: 0.5px solid var(--border-light); margin-top: 4px;
     }
 
     @media (max-width: 700px) {
@@ -663,19 +568,20 @@
           <thead>
             <tr>
               <th>App ID</th>
-              <th>Timestamp</th>
+              <th>Submitted</th>
               <th>Type</th>
               <th>Owner / Business</th>
               <th>Barangay</th>
               <th>Line of Business</th>
               <th>Status</th>
+              <th>Audit Trail</th>
               <th>Processed By</th>
               <th></th>
             </tr>
           </thead>
           <tbody id="table-body">
             <tr class="loading-row">
-              <td colspan="9">Loading entries…</td>
+              <td colspan="10">Loading entries…</td>
             </tr>
           </tbody>
         </table>
@@ -700,6 +606,12 @@
         <div class="modal-section">
           <div class="modal-section-title">Application Info</div>
           <div class="info-grid" id="modal-info"></div>
+        </div>
+
+        <!-- Audit Timeline -->
+        <div class="modal-section">
+          <div class="modal-section-title">Audit Trail</div>
+          <div class="audit-timeline" id="modal-audit-timeline"></div>
         </div>
 
         <div class="modal-section">
@@ -869,7 +781,7 @@
 
         <div class="modal-section" style="margin-bottom:0;padding-bottom:0;border-bottom:none;">
           <div class="report-preview-note" id="report-preview-note">
-            Generates today's report — statistics summary followed by applicants grouped by status.
+            Generates today's report — statistics summary followed by applicants grouped by status, with full audit trail per entry.
           </div>
         </div>
 
@@ -889,7 +801,7 @@
   <script src="../config.js"></script>
   <script>
 
-    // ── Status config (single source of truth) ──────────────────
+    // ── Status config ──────────────────────────────────────────
     const STATUSES = [
       {
         value: 'For Inspection',
@@ -897,6 +809,9 @@
         cssKey: 'ForInspection',
         badgeBg: '#e8eaf6', badgeColor: '#3949ab',
         reportBg: '#e8eaf6', reportColor: '#3949ab',
+        auditColor: '#3949ab', auditIcon: '🔍',
+        // which audit timestamp column this status sets
+        setsTimestamp: 'reviewedAt',
       },
       {
         value: 'Disapproved - for compliance with noted sanitary violation',
@@ -904,6 +819,8 @@
         cssKey: 'PendingCompliance',
         badgeBg: '#fce4ec', badgeColor: '#880e4f',
         reportBg: '#fce4ec', reportColor: '#880e4f',
+        auditColor: '#880e4f', auditIcon: '⚠️',
+        setsTimestamp: 'reviewedAt',
       },
       {
         value: 'Approved',
@@ -911,6 +828,8 @@
         cssKey: 'Approved',
         badgeBg: '#e8f5e9', badgeColor: '#2e7d32',
         reportBg: '#e8f5e9', reportColor: '#2e7d32',
+        auditColor: '#2e7d32', auditIcon: '✓',
+        setsTimestamp: 'approvedAt',
       },
       {
         value: 'Disapproved',
@@ -918,6 +837,8 @@
         cssKey: 'Disapproved',
         badgeBg: '#ffebee', badgeColor: '#c62828',
         reportBg: '#ffebee', reportColor: '#c62828',
+        auditColor: '#c62828', auditIcon: '✕',
+        setsTimestamp: 'reviewedAt',
       },
     ];
 
@@ -926,7 +847,18 @@
       return STATUSES.find(s => s.value === value) || null;
     }
 
-    // ── Auth guard ──────────────────────────────────────────────
+    // ── Format timestamp ───────────────────────────────────────
+    function fmtTs(ts) {
+      if (!ts) return null;
+      const d = new Date(ts);
+      if (isNaN(d)) return ts; // return raw if unparseable
+      return d.toLocaleString('en-PH', {
+        year: 'numeric', month: 'short', day: 'numeric',
+        hour: '2-digit', minute: '2-digit',
+      });
+    }
+
+    // ── Auth guard ─────────────────────────────────────────────
     const adminToken    = sessionStorage.getItem('admin_token');
     const adminFullName = sessionStorage.getItem('admin_fullname') || 'Admin';
     const adminUsername = sessionStorage.getItem('admin_username');
@@ -935,12 +867,9 @@
 
     document.getElementById('admin-name-display').textContent = adminFullName;
 
-    function logout() {
-      sessionStorage.clear();
-      window.location.href = 'index.html';
-    }
+    function logout() { sessionStorage.clear(); window.location.href = 'index.html'; }
 
-    // ── State ───────────────────────────────────────────────────
+    // ── State ──────────────────────────────────────────────────
     let allEntries      = [];
     let filteredEntries = [];
     let currentPage     = 1;
@@ -948,7 +877,7 @@
     let editingRow      = null;
     let reportType      = 'today';
 
-    // ── API call ────────────────────────────────────────────────
+    // ── API call ───────────────────────────────────────────────
     async function api(payload) {
       const res = await fetch(CONFIG.APPS_SCRIPT_URL, {
         method: 'POST',
@@ -957,14 +886,14 @@
       return res.json();
     }
 
-    // ── Load entries ────────────────────────────────────────────
+    // ── Load entries ───────────────────────────────────────────
     async function loadEntries() {
       document.getElementById('table-body').innerHTML =
-        '<tr class="loading-row"><td colspan="9">Loading…</td></tr>';
+        '<tr class="loading-row"><td colspan="10">Loading…</td></tr>';
 
       if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL.includes('YOUR_')) {
         document.getElementById('table-body').innerHTML =
-          '<tr class="loading-row"><td colspan="9">⚠ Apps Script URL not configured. See config.js</td></tr>';
+          '<tr class="loading-row"><td colspan="10">⚠ Apps Script URL not configured. See config.js</td></tr>';
         return;
       }
 
@@ -979,19 +908,19 @@
         updateStats();
       } catch (err) {
         document.getElementById('table-body').innerHTML =
-          `<tr class="loading-row"><td colspan="9">Error loading entries: ${err.message}</td></tr>`;
+          `<tr class="loading-row"><td colspan="10">Error loading entries: ${err.message}</td></tr>`;
       }
     }
 
-    // ── Stats ───────────────────────────────────────────────────
+    // ── Stats ──────────────────────────────────────────────────
     function updateStats() {
-      document.getElementById('stat-total').textContent          = allEntries.length;
-      document.getElementById('stat-inspection').textContent     = allEntries.filter(e => e['Status'] === 'For Inspection').length;
-      document.getElementById('stat-approved').textContent       = allEntries.filter(e => e['Status'] === 'Approved').length;
+      document.getElementById('stat-total').textContent           = allEntries.length;
+      document.getElementById('stat-inspection').textContent      = allEntries.filter(e => e['Status'] === 'For Inspection').length;
+      document.getElementById('stat-approved').textContent        = allEntries.filter(e => e['Status'] === 'Approved').length;
       document.getElementById('stat-disapproved-san').textContent = allEntries.filter(e => e['Status'] === 'Disapproved - for compliance with noted sanitary violation').length;
     }
 
-    // ── Filters ─────────────────────────────────────────────────
+    // ── Filters ────────────────────────────────────────────────
     function applyFilters() {
       const q       = document.getElementById('search-input').value.toLowerCase();
       const status  = document.getElementById('filter-status').value;
@@ -1001,8 +930,8 @@
         const matchQ = !q || [
           e['App ID'], e['Owner Name'], e['Business Name'], e['Barangay']
         ].some(v => (v || '').toLowerCase().includes(q));
-        const matchStatus  = !status  || e['Status'] === status;
-        const matchType    = !appType || e['Application Type'] === appType;
+        const matchStatus = !status  || e['Status'] === status;
+        const matchType   = !appType || e['Application Type'] === appType;
         return matchQ && matchStatus && matchType;
       });
 
@@ -1010,7 +939,40 @@
       renderTable();
     }
 
-    // ── Render table ────────────────────────────────────────────
+    // ── Build compact audit trail for table ───────────────────
+    function buildAuditTrailCell(entry) {
+      const submittedAt = entry['Timestamp'];
+      const reviewedAt  = entry['Reviewed At'];
+      const approvedAt  = entry['Approved At'];
+
+      const rows = [];
+
+      rows.push(`<div class="audit-row">
+        <span class="audit-dot" style="background:#888;"></span>
+        <span class="audit-label">Submitted</span>
+        <span style="font-size:10.5px;">${fmtTs(submittedAt) || '—'}</span>
+      </div>`);
+
+      if (reviewedAt) {
+        rows.push(`<div class="audit-row">
+          <span class="audit-dot" style="background:#3949ab;"></span>
+          <span class="audit-label">Reviewed</span>
+          <span style="font-size:10.5px;">${fmtTs(reviewedAt)}</span>
+        </div>`);
+      }
+
+      if (approvedAt) {
+        rows.push(`<div class="audit-row">
+          <span class="audit-dot" style="background:#2e7d32;"></span>
+          <span class="audit-label">Approved</span>
+          <span style="font-size:10.5px;">${fmtTs(approvedAt)}</span>
+        </div>`);
+      }
+
+      return `<div class="audit-trail">${rows.join('')}</div>`;
+    }
+
+    // ── Render table ───────────────────────────────────────────
     function renderTable() {
       const tbody = document.getElementById('table-body');
       const start = (currentPage - 1) * PAGE_SIZE;
@@ -1018,10 +980,8 @@
 
       if (!page.length) {
         tbody.innerHTML = `
-          <tr><td colspan="9">
-            <div class="empty-state">
-              <div class="empty-label">No entries found</div>
-            </div>
+          <tr><td colspan="10">
+            <div class="empty-state"><div class="empty-label">No entries found</div></div>
           </td></tr>`;
         updatePagination();
         return;
@@ -1036,7 +996,7 @@
         return `
           <tr>
             <td class="cell-id">${entry['App ID'] || '—'}</td>
-            <td class="cell-ts">${entry['Timestamp'] || '—'}</td>
+            <td class="cell-ts">${fmtTs(entry['Timestamp']) || '—'}</td>
             <td>${entry['Application Type'] || '—'}</td>
             <td class="cell-name">
               <div>${entry['Owner Name'] || '—'}</div>
@@ -1045,6 +1005,7 @@
             <td>${entry['Barangay'] || '—'}</td>
             <td>${entry['Line of Business'] || '—'}</td>
             <td>${statusCell}</td>
+            <td>${buildAuditTrailCell(entry)}</td>
             <td style="font-size:11px;color:#888;">${entry['Processed By'] || '—'}</td>
             <td><button class="edit-btn" onclick="openEditModal(${entry._rowIndex})">Edit</button></td>
           </tr>`;
@@ -1053,12 +1014,12 @@
       updatePagination();
     }
 
-    // ── Pagination ───────────────────────────────────────────────
+    // ── Pagination ─────────────────────────────────────────────
     function updatePagination() {
-      const total  = filteredEntries.length;
-      const pages  = Math.ceil(total / PAGE_SIZE);
-      const start  = total ? (currentPage - 1) * PAGE_SIZE + 1 : 0;
-      const end    = Math.min(currentPage * PAGE_SIZE, total);
+      const total = filteredEntries.length;
+      const pages = Math.ceil(total / PAGE_SIZE);
+      const start = total ? (currentPage - 1) * PAGE_SIZE + 1 : 0;
+      const end   = Math.min(currentPage * PAGE_SIZE, total);
 
       document.getElementById('pagination-info').textContent =
         total ? `Showing ${start}–${end} of ${total}` : 'No results';
@@ -1097,7 +1058,60 @@
       container.appendChild(nextBtn);
     }
 
-    // ── Edit Modal ───────────────────────────────────────────────
+    // ── Build audit timeline for modal ─────────────────────────
+    function buildAuditTimeline(entry) {
+      const submittedAt = entry['Timestamp'];
+      const reviewedAt  = entry['Reviewed At'];
+      const approvedAt  = entry['Approved At'];
+      const status      = entry['Status'] || '';
+
+      // Determine what the review step label should be
+      let reviewLabel = 'Reviewed';
+      if (status === 'For Inspection') reviewLabel = 'Labelled: For Inspection';
+      else if (status === 'Disapproved - for compliance with noted sanitary violation') reviewLabel = 'Labelled: Disapproved (Sanitary Violation)';
+      else if (status === 'Disapproved') reviewLabel = 'Labelled: Disapproved';
+      else if (reviewedAt) reviewLabel = 'Reviewed / Labelled';
+
+      const steps = [
+        {
+          icon: '📋',
+          iconBg: '#f5f4f0',
+          label: 'Application Submitted',
+          time: submittedAt,
+          done: !!submittedAt,
+        },
+        {
+          icon: '🔍',
+          iconBg: reviewedAt ? '#e8eaf6' : '#f5f4f0',
+          label: reviewLabel,
+          time: reviewedAt,
+          done: !!reviewedAt,
+        },
+        {
+          icon: '✓',
+          iconBg: approvedAt ? '#e8f5e9' : '#f5f4f0',
+          label: 'Approved',
+          time: approvedAt,
+          done: !!approvedAt,
+        },
+      ];
+
+      return steps.map(step => `
+        <div class="audit-step">
+          <div class="audit-step-icon done" style="background:${step.iconBg}; font-size:11px;">
+            ${step.icon}
+          </div>
+          <div class="audit-step-content">
+            <div class="audit-step-label">${step.label}</div>
+            ${step.done
+              ? `<div class="audit-step-time">${fmtTs(step.time)}</div>`
+              : `<div class="audit-step-pending">Not yet recorded</div>`
+            }
+          </div>
+        </div>`).join('');
+    }
+
+    // ── Edit Modal ─────────────────────────────────────────────
     function openEditModal(rowIndex) {
       const entry = allEntries.find(e => e._rowIndex === rowIndex);
       if (!entry) return;
@@ -1105,22 +1119,24 @@
 
       const infoGrid = document.getElementById('modal-info');
       const fields = [
-        ['App ID', entry['App ID']],
-        ['Timestamp', entry['Timestamp']],
-        ['Application Type', entry['Application Type']],
-        ['Owner Type', entry['Owner Type']],
-        ['Owner Name', entry['Owner Name']],
-        ['Contact', entry['Contact Number']],
-        ['Business Name', entry['Business Name']],
-        ['Business Address', entry['Business Address']],
-        ['Barangay', entry['Barangay']],
-        ['Line of Business', entry['Line of Business']],
+        ['App ID',            entry['App ID']],
+        ['Application Type',  entry['Application Type']],
+        ['Owner Type',        entry['Owner Type']],
+        ['Owner Name',        entry['Owner Name']],
+        ['Contact',           entry['Contact Number']],
+        ['Business Name',     entry['Business Name']],
+        ['Business Address',  entry['Business Address']],
+        ['Barangay',          entry['Barangay']],
+        ['Line of Business',  entry['Line of Business']],
       ];
       infoGrid.innerHTML = fields.map(([k, v]) => `
         <div class="info-item">
           <div class="info-key">${k}</div>
           <div class="info-val">${v || '—'}</div>
         </div>`).join('');
+
+      // Render audit timeline
+      document.getElementById('modal-audit-timeline').innerHTML = buildAuditTimeline(entry);
 
       document.getElementById('edit-status').value      = entry['Status'] || '';
       document.getElementById('edit-attachments').value = entry['Attachments'] || '';
@@ -1135,10 +1151,7 @@
       const val  = document.getElementById('edit-status').value;
       const meta = getStatusMeta(val);
       const hint = document.getElementById('status-hint');
-      if (!meta) {
-        hint.style.display = 'none';
-        return;
-      }
+      if (!meta) { hint.style.display = 'none'; return; }
       hint.textContent = meta.value;
       hint.style.background = meta.badgeBg;
       hint.style.color = meta.badgeColor;
@@ -1155,6 +1168,31 @@
       const rowToSave = editingRow;
       if (rowToSave === null) return;
 
+      const newStatus = document.getElementById('edit-status').value;
+      const entry     = allEntries.find(e => e._rowIndex === rowToSave);
+      const oldStatus = entry ? (entry['Status'] || '') : '';
+
+      // Determine which audit timestamps to set
+      // Only set a timestamp when the status *changes* into a new category
+      const now = new Date().toISOString();
+      const meta = getStatusMeta(newStatus);
+
+      let reviewedAt = entry ? (entry['Reviewed At'] || '') : '';
+      let approvedAt = entry ? (entry['Approved At'] || '') : '';
+
+      if (newStatus && newStatus !== oldStatus && meta) {
+        if (meta.setsTimestamp === 'reviewedAt' && !reviewedAt) {
+          reviewedAt = now;
+        }
+        if (meta.setsTimestamp === 'approvedAt' && !approvedAt) {
+          approvedAt = now;
+        }
+        // If re-approved after being un-approved (edge case), allow override:
+        if (meta.setsTimestamp === 'approvedAt' && newStatus === 'Approved') {
+          approvedAt = now;
+        }
+      }
+
       const btn = document.getElementById('save-btn');
       btn.disabled = true;
       btn.innerHTML = '<span class="spinner"></span>';
@@ -1164,10 +1202,12 @@
           action: 'updateEntry',
           rowIndex: rowToSave,
           data: {
-            status:      document.getElementById('edit-status').value,
+            status:      newStatus,
             attachments: document.getElementById('edit-attachments').value,
             remarks:     document.getElementById('edit-remarks').value,
             adminNotes:  document.getElementById('edit-admin-notes').value,
+            reviewedAt,
+            approvedAt,
           }
         });
 
@@ -1187,10 +1227,8 @@
       }
     }
 
-    // ── Add Modal ────────────────────────────────────────────────
-    function openAddModal() {
-      document.getElementById('add-modal').style.display = 'flex';
-    }
+    // ── Add Modal ──────────────────────────────────────────────
+    function openAddModal() { document.getElementById('add-modal').style.display = 'flex'; }
 
     function closeAddModal(e) {
       if (e instanceof Event && e.target !== document.getElementById('add-modal')) return;
@@ -1246,7 +1284,7 @@
       }
     }
 
-    // ── Report Modal ─────────────────────────────────────────────
+    // ── Report Modal ───────────────────────────────────────────
     function openReportModal() {
       const today = new Date().toISOString().split('T')[0];
       document.getElementById('report-date-from').value = today;
@@ -1269,17 +1307,17 @@
 
       if (type === 'today') {
         dateSection.style.display = 'none';
-        note.textContent = "Generates today's report — statistics summary followed by applicants grouped by status.";
+        note.textContent = "Generates today's report — statistics summary followed by applicants grouped by status, with full audit trail per entry.";
       } else if (type === 'range') {
         dateSection.style.display = '';
-        note.textContent = "Generates a report for entries submitted within the selected date range.";
+        note.textContent = "Generates a report for entries submitted within the selected date range, with audit trail per entry.";
       } else {
         dateSection.style.display = 'none';
-        note.textContent = "Generates a complete report of all applications on record, grouped by status.";
+        note.textContent = "Generates a complete report of all applications on record, grouped by status, with audit trail per entry.";
       }
     }
 
-    // ── Report Generation ─────────────────────────────────────────
+    // ── Report Generation ──────────────────────────────────────
     function parseEntryDate(entry) {
       const ts = entry['Timestamp'] || '';
       const d = new Date(ts);
@@ -1288,8 +1326,8 @@
     }
 
     function toDateStr(d) {
-      const y = d.getFullYear();
-      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const y  = d.getFullYear();
+      const m  = String(d.getMonth() + 1).padStart(2, '0');
       const dd = String(d.getDate()).padStart(2, '0');
       return `${y}-${m}-${dd}`;
     }
@@ -1301,12 +1339,47 @@
       return `${months[parseInt(m,10)-1]} ${parseInt(d,10)}, ${y}`;
     }
 
+    // Build the per-entry audit trail HTML for the printed report
+    function buildReportAuditTrail(entry) {
+      const submittedAt = entry['Timestamp'];
+      const reviewedAt  = entry['Reviewed At'];
+      const approvedAt  = entry['Approved At'];
+      const processedBy = entry['Processed By'];
+
+      const steps = [
+        { label: 'Submitted',         time: submittedAt, color: '#555',   dot: '#aaa' },
+        { label: 'Reviewed / Labelled', time: reviewedAt, color: '#3949ab', dot: '#3949ab' },
+        { label: 'Approved',           time: approvedAt,  color: '#2e7d32', dot: '#2e7d32' },
+      ];
+
+      const rendered = steps.map(s => {
+        if (!s.time) return '';
+        return `<span style="
+          display:inline-flex; align-items:center; gap:5px;
+          margin-right:14px; font-size:10.5px; color:${s.color};
+        ">
+          <span style="width:5px;height:5px;border-radius:50%;background:${s.dot};display:inline-block;"></span>
+          <strong style="font-size:9.5px;text-transform:uppercase;letter-spacing:0.05em;margin-right:3px;">${s.label}</strong>
+          ${fmtTs(s.time)}
+        </span>`;
+      }).filter(Boolean).join('');
+
+      const processedStr = processedBy
+        ? `<span style="font-size:10px;color:#aaa;margin-left:4px;">· Processed by ${processedBy}</span>`
+        : '';
+
+      if (!rendered) return '';
+      return `<div style="margin-top:5px; padding-top:5px; border-top:0.5px solid #eee; display:flex; flex-wrap:wrap; align-items:center; gap:4px;">
+        ${rendered}${processedStr}
+      </div>`;
+    }
+
     function generateReport() {
       let entries = [...allEntries];
-      let reportTitle = '';
+      let reportTitle  = '';
       let reportPeriod = '';
 
-      const now = new Date();
+      const now      = new Date();
       const todayStr = toDateStr(now);
 
       if (reportType === 'today') {
@@ -1341,66 +1414,50 @@
         return;
       }
 
-      const total    = entries.length;
-      const byType   = {};
+      const total  = entries.length;
+      const byType = {};
       entries.forEach(e => {
         const t = e['Application Type'] || 'Unknown';
         byType[t] = (byType[t] || 0) + 1;
       });
 
-      // ── Summary stat counts (4 cards only) ──
       const forInspectionCount  = entries.filter(e => (e['Status'] || '') === 'For Inspection').length;
       const approvedCount       = entries.filter(e => (e['Status'] || '') === 'Approved').length;
       const disapprovedSanCount = entries.filter(e => (e['Status'] || '') === 'Disapproved - for compliance with noted sanitary violation').length;
 
       const statCards = [
-        ['Total',                            total,              '#1a1a1a'],
-        ['For Inspection',                   forInspectionCount, '#3949ab'],
-        ['Approved',                         approvedCount,      '#2e7d32'],
-        ['Disapproved – Sanitary Violation', disapprovedSanCount,'#880e4f'],
+        ['Total',                            total,               '#1a1a1a'],
+        ['For Inspection',                   forInspectionCount,  '#3949ab'],
+        ['Approved',                         approvedCount,       '#2e7d32'],
+        ['Disapproved – Sanitary Violation', disapprovedSanCount, '#880e4f'],
       ].map(([label, val, color]) => `
         <div style="border:0.5px solid #e0ddd6; border-radius:9px; padding:12px 14px; background:#fafaf8;">
           <div style="font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#999; margin-bottom:5px;">${label}</div>
           <div style="font-size:22px; font-weight:600; color:${color}; letter-spacing:-0.02em;">${val}</div>
         </div>`).join('');
 
-      // ── Applicant sections grouped by status ──
+      // Build applicant sections
       const noStatusEntries = entries.filter(e => !e['Status'] || e['Status'] === '');
       let applicantSections = '';
 
       if (noStatusEntries.length) {
         const rows = noStatusEntries.map((e, i) => `
           <tr style="border-bottom: 0.5px solid #eee;">
-            <td style="padding:7px 10px; font-size:11px; color:#888; font-family:monospace;">${i + 1}</td>
-            <td style="padding:7px 10px; font-size:11.5px; font-family:monospace; color:#555;">${e['App ID'] || '—'}</td>
-            <td style="padding:7px 10px; font-size:12px; font-weight:500;">${e['Owner Name'] || '—'}</td>
-            <td style="padding:7px 10px; font-size:11.5px; color:#555;">${e['Business Name'] || '—'}</td>
-            <td style="padding:7px 10px; font-size:11.5px; color:#555;">${e['Application Type'] || '—'}</td>
-            <td style="padding:7px 10px; font-size:11.5px; color:#555;">${e['Barangay'] || '—'}</td>
-            <td style="padding:7px 10px; font-size:11px; color:#888;">${e['Timestamp'] || '—'}</td>
+            <td style="padding:8px 10px; font-size:11px; color:#888; font-family:monospace; vertical-align:top;">${i + 1}</td>
+            <td style="padding:8px 10px; font-size:11.5px; font-family:monospace; color:#555; vertical-align:top; white-space:nowrap;">${e['App ID'] || '—'}</td>
+            <td style="padding:8px 10px; font-size:12px; font-weight:500; vertical-align:top;">
+              ${e['Owner Name'] || '—'}
+              <div style="font-size:11px; color:#777; font-weight:400; margin-top:1px;">${e['Business Name'] || ''}</div>
+            </td>
+            <td style="padding:8px 10px; font-size:11.5px; color:#555; vertical-align:top;">${e['Application Type'] || '—'}</td>
+            <td style="padding:8px 10px; font-size:11.5px; color:#555; vertical-align:top;">${e['Barangay'] || '—'}</td>
+            <td style="padding:8px 10px; vertical-align:top;">
+              <div style="font-size:10.5px; color:#555; white-space:nowrap;">${fmtTs(e['Timestamp']) || '—'}</div>
+              ${buildReportAuditTrail(e)}
+            </td>
           </tr>`).join('');
 
-        applicantSections += `
-          <div style="margin-bottom:28px; break-inside:avoid;">
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-              <span style="display:inline-block; padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; letter-spacing:0.04em; background:#f5f4f0; color:#888;">Pending Review</span>
-              <span style="font-size:12px; color:#888;">${noStatusEntries.length} application${noStatusEntries.length !== 1 ? 's' : ''}</span>
-            </div>
-            <table style="width:100%; border-collapse:collapse; border:0.5px solid #e0ddd6; border-radius:8px; overflow:hidden; font-family:'DM Sans',sans-serif;">
-              <thead>
-                <tr style="background:#f5f4f0; border-bottom:0.5px solid #e0ddd6;">
-                  <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">#</th>
-                  <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">App ID</th>
-                  <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">Owner / Applicant</th>
-                  <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">Business Name</th>
-                  <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">Type</th>
-                  <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">Barangay</th>
-                  <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">Submitted</th>
-                </tr>
-              </thead>
-              <tbody>${rows}</tbody>
-            </table>
-          </div>`;
+        applicantSections += buildStatusSection('Pending Review', '#f5f4f0', '#888', noStatusEntries.length, rows);
       }
 
       STATUSES.forEach(({ value: status, label, reportBg, reportColor }) => {
@@ -1409,45 +1466,21 @@
 
         const rows = group.map((e, i) => `
           <tr style="border-bottom: 0.5px solid #eee;">
-            <td style="padding:7px 10px; font-size:11px; color:#888; font-family:monospace;">${i + 1}</td>
-            <td style="padding:7px 10px; font-size:11.5px; font-family:monospace; color:#555;">${e['App ID'] || '—'}</td>
-            <td style="padding:7px 10px; font-size:12px; font-weight:500;">${e['Owner Name'] || '—'}</td>
-            <td style="padding:7px 10px; font-size:11.5px; color:#555;">${e['Business Name'] || '—'}</td>
-            <td style="padding:7px 10px; font-size:11.5px; color:#555;">${e['Application Type'] || '—'}</td>
-            <td style="padding:7px 10px; font-size:11.5px; color:#555;">${e['Barangay'] || '—'}</td>
-            <td style="padding:7px 10px; font-size:11px; color:#888;">${e['Timestamp'] || '—'}</td>
+            <td style="padding:8px 10px; font-size:11px; color:#888; font-family:monospace; vertical-align:top;">${i + 1}</td>
+            <td style="padding:8px 10px; font-size:11.5px; font-family:monospace; color:#555; vertical-align:top; white-space:nowrap;">${e['App ID'] || '—'}</td>
+            <td style="padding:8px 10px; font-size:12px; font-weight:500; vertical-align:top;">
+              ${e['Owner Name'] || '—'}
+              <div style="font-size:11px; color:#777; font-weight:400; margin-top:1px;">${e['Business Name'] || ''}</div>
+            </td>
+            <td style="padding:8px 10px; font-size:11.5px; color:#555; vertical-align:top;">${e['Application Type'] || '—'}</td>
+            <td style="padding:8px 10px; font-size:11.5px; color:#555; vertical-align:top;">${e['Barangay'] || '—'}</td>
+            <td style="padding:8px 10px; vertical-align:top;">
+              <div style="font-size:10.5px; color:#555; white-space:nowrap;">${fmtTs(e['Timestamp']) || '—'}</div>
+              ${buildReportAuditTrail(e)}
+            </td>
           </tr>`).join('');
 
-        applicantSections += `
-          <div style="margin-bottom:28px; break-inside:avoid;">
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-              <span style="
-                display:inline-block;
-                padding:4px 14px;
-                border-radius:20px;
-                font-size:12px;
-                font-weight:600;
-                letter-spacing:0.04em;
-                background:${reportBg};
-                color:${reportColor};
-              ">${status}</span>
-              <span style="font-size:12px; color:#888;">${group.length} application${group.length !== 1 ? 's' : ''}</span>
-            </div>
-            <table style="width:100%; border-collapse:collapse; border:0.5px solid #e0ddd6; border-radius:8px; overflow:hidden; font-family:'DM Sans',sans-serif;">
-              <thead>
-                <tr style="background:#f5f4f0; border-bottom:0.5px solid #e0ddd6;">
-                  <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">#</th>
-                  <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">App ID</th>
-                  <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">Owner / Applicant</th>
-                  <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">Business Name</th>
-                  <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">Type</th>
-                  <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">Barangay</th>
-                  <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">Submitted</th>
-                </tr>
-              </thead>
-              <tbody>${rows}</tbody>
-            </table>
-          </div>`;
+        applicantSections += buildStatusSection(status, reportBg, reportColor, group.length, rows);
       });
 
       const typeRows = Object.entries(byType).sort((a,b) => b[1]-a[1]).map(([t, c]) => `
@@ -1470,7 +1503,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-    body { font-family:'DM Sans',sans-serif; background:#fff; color:#1a1a1a; padding:40px; max-width:1000px; margin:0 auto; }
+    body { font-family:'DM Sans',sans-serif; background:#fff; color:#1a1a1a; padding:40px; max-width:1040px; margin:0 auto; }
     @media print {
       body { padding:20px; }
       .no-print { display:none !important; }
@@ -1518,6 +1551,20 @@
     </table>
   </div>
 
+  <!-- Audit Trail Legend -->
+  <div style="margin-bottom:24px; padding:10px 14px; background:#f9f9f7; border:0.5px solid #e8e6e0; border-radius:8px; display:flex; align-items:center; gap:20px;">
+    <span style="font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#aaa; font-weight:500;">Audit Trail Legend</span>
+    <span style="font-size:10.5px; color:#555; display:flex; align-items:center; gap:5px;">
+      <span style="width:5px;height:5px;border-radius:50%;background:#aaa;display:inline-block;"></span> Submitted
+    </span>
+    <span style="font-size:10.5px; color:#3949ab; display:flex; align-items:center; gap:5px;">
+      <span style="width:5px;height:5px;border-radius:50%;background:#3949ab;display:inline-block;"></span> Reviewed / Labelled
+    </span>
+    <span style="font-size:10.5px; color:#2e7d32; display:flex; align-items:center; gap:5px;">
+      <span style="width:5px;height:5px;border-radius:50%;background:#2e7d32;display:inline-block;"></span> Approved
+    </span>
+  </div>
+
   <div>
     <div style="font-size:10px; font-weight:500; text-transform:uppercase; letter-spacing:0.08em; color:#888; margin-bottom:16px;">Applicants by Status</div>
     ${applicantSections}
@@ -1531,16 +1578,37 @@
 </html>`;
 
       const win = window.open('', '_blank');
-      if (!win) {
-        showToast('Popup blocked. Please allow popups for this site.', 'error');
-        return;
-      }
+      if (!win) { showToast('Popup blocked. Please allow popups for this site.', 'error'); return; }
       win.document.write(html);
       win.document.close();
       document.getElementById('report-modal').style.display = 'none';
     }
 
-    // ── Toast ───────────────────────────────────────────────────
+    // Helper: build a status section block for the report
+    function buildStatusSection(status, bg, color, count, rows) {
+      return `
+        <div style="margin-bottom:28px; break-inside:avoid;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+            <span style="display:inline-block; padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; letter-spacing:0.04em; background:${bg}; color:${color};">${status}</span>
+            <span style="font-size:12px; color:#888;">${count} application${count !== 1 ? 's' : ''}</span>
+          </div>
+          <table style="width:100%; border-collapse:collapse; border:0.5px solid #e0ddd6; border-radius:8px; overflow:hidden; font-family:'DM Sans',sans-serif;">
+            <thead>
+              <tr style="background:#f5f4f0; border-bottom:0.5px solid #e0ddd6;">
+                <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500; width:30px;">#</th>
+                <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">App ID</th>
+                <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">Owner / Business</th>
+                <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">Type</th>
+                <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">Barangay</th>
+                <th style="padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#888; text-align:left; font-weight:500;">Timestamps / Audit Trail</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>`;
+    }
+
+    // ── Toast ──────────────────────────────────────────────────
     function showToast(msg, type = 'success') {
       const t = document.getElementById('toast');
       t.textContent = msg;
@@ -1550,7 +1618,7 @@
       t._timer = setTimeout(() => { t.style.display = 'none'; }, 4000);
     }
 
-    // ── Init ────────────────────────────────────────────────────
+    // ── Init ───────────────────────────────────────────────────
     loadEntries();
   </script>
 
