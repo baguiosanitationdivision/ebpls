@@ -899,7 +899,7 @@
         reportBg: '#e8eaf6', reportColor: '#3949ab',
       },
       {
-        value: 'Pending - for compliance with noted sanitary violation',
+        value: 'Disapproved - for compliance with noted sanitary violation',
         label: 'Pending – Sanitary Violation',
         cssKey: 'PendingCompliance',
         badgeBg: '#fce4ec', badgeColor: '#880e4f',
@@ -988,7 +988,7 @@
       document.getElementById('stat-total').textContent          = allEntries.length;
       document.getElementById('stat-inspection').textContent     = allEntries.filter(e => e['Status'] === 'For Inspection').length;
       document.getElementById('stat-approved').textContent       = allEntries.filter(e => e['Status'] === 'Approved').length;
-      document.getElementById('stat-disapproved-san').textContent = allEntries.filter(e => e['Status'] === 'Pending - for compliance with noted sanitary violation').length;
+      document.getElementById('stat-disapproved-san').textContent = allEntries.filter(e => e['Status'] === 'Disapproved - for compliance with noted sanitary violation').length;
     }
 
     // ── Filters ─────────────────────────────────────────────────
@@ -1142,7 +1142,7 @@
       hint.textContent = meta.value;
       hint.style.background = meta.badgeBg;
       hint.style.color = meta.badgeColor;
-      hint.style.display = val === 'Pending - for compliance with noted sanitary violation' ? 'inline-flex' : 'none';
+      hint.style.display = val === 'Disapproved - for compliance with noted sanitary violation' ? 'inline-flex' : 'none';
     }
 
     function closeEditModal(e) {
@@ -1351,7 +1351,7 @@
       // ── Summary stat counts (4 cards only) ──
       const forInspectionCount  = entries.filter(e => (e['Status'] || '') === 'For Inspection').length;
       const approvedCount       = entries.filter(e => (e['Status'] || '') === 'Approved').length;
-      const disapprovedSanCount = entries.filter(e => (e['Status'] || '') === 'Pending - for compliance with noted sanitary violation').length;
+      const disapprovedSanCount = entries.filter(e => (e['Status'] || '') === 'Disapproved - for compliance with noted sanitary violation').length;
 
       const statCards = [
         ['Total',                            total,              '#1a1a1a'],
