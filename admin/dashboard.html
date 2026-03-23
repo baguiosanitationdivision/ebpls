@@ -509,6 +509,7 @@
       <a href="../index.html">
         <button class="btn-sm btn-outline">View Form</button>
       </a>
+      <button class="btn-sm btn-outline" onclick="openChangePasswordModal()">Change Password</button>
       <button class="btn-sm btn-outline" onclick="logout()">Sign out</button>
     </div>
   </div>
@@ -791,6 +792,61 @@
         <button class="btn-sm btn-dark" id="generate-btn" onclick="generateReport()">
           <span id="generate-text">Generate &amp; Print</span>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div class="modal-overlay" id="change-pw-modal" style="display:none;" onclick="closeChangePasswordModal(event)">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:400px;">
+      <div class="modal-header">
+        <span class="modal-title">Change Password</span>
+        <button class="modal-close" onclick="closeChangePasswordModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section" style="margin-bottom:0;padding-bottom:0;border-bottom:none;">
+          <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px; padding:10px 12px; background:var(--bg); border-radius:7px; border:0.5px solid var(--border-light);">
+            Changing password for <strong id="cpw-username-label">—</strong>
+          </div>
+
+          <div class="modal-field">
+            <label>Current Password</label>
+            <div style="position:relative;">
+              <input type="password" id="cpw-current" placeholder="Enter current password" autocomplete="current-password">
+              <button type="button" onclick="togglePwVisibility('cpw-current', this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-faint);font-size:12px;padding:2px 4px;">Show</button>
+            </div>
+          </div>
+
+          <div class="modal-field">
+            <label>New Password</label>
+            <div style="position:relative;">
+              <input type="password" id="cpw-new" placeholder="Enter new password" autocomplete="new-password" oninput="checkPwStrength(this.value)">
+              <button type="button" onclick="togglePwVisibility('cpw-new', this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-faint);font-size:12px;padding:2px 4px;">Show</button>
+            </div>
+            <!-- Strength bar -->
+            <div style="margin-top:6px; display:flex; gap:4px;" id="cpw-strength-bars">
+              <div id="cpw-bar-1" style="height:3px;flex:1;border-radius:2px;background:var(--border);transition:background 0.2s;"></div>
+              <div id="cpw-bar-2" style="height:3px;flex:1;border-radius:2px;background:var(--border);transition:background 0.2s;"></div>
+              <div id="cpw-bar-3" style="height:3px;flex:1;border-radius:2px;background:var(--border);transition:background 0.2s;"></div>
+              <div id="cpw-bar-4" style="height:3px;flex:1;border-radius:2px;background:var(--border);transition:background 0.2s;"></div>
+            </div>
+            <div id="cpw-strength-label" style="font-size:10.5px;color:var(--text-faint);margin-top:4px;"></div>
+          </div>
+
+          <div class="modal-field">
+            <label>Confirm New Password</label>
+            <div style="position:relative;">
+              <input type="password" id="cpw-confirm" placeholder="Re-enter new password" autocomplete="new-password">
+              <button type="button" onclick="togglePwVisibility('cpw-confirm', this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-faint);font-size:12px;padding:2px 4px;">Show</button>
+            </div>
+          </div>
+
+          <div id="cpw-error" style="font-size:12px;color:#e53935;min-height:18px;margin-top:4px;"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-sm btn-outline" onclick="closeChangePasswordModal()">Cancel</button>
+        <button class="btn-sm btn-dark" id="cpw-save-btn" onclick="saveChangePassword()">Update Password</button>
       </div>
     </div>
   </div>
@@ -1616,6 +1672,98 @@
       t.style.display = 'block';
       clearTimeout(t._timer);
       t._timer = setTimeout(() => { t.style.display = 'none'; }, 4000);
+    }
+
+    // ── Change Password ────────────────────────────────────────
+    function openChangePasswordModal() {
+      document.getElementById('cpw-username-label').textContent = adminFullName + ' (' + adminUsername + ')';
+      document.getElementById('cpw-current').value  = '';
+      document.getElementById('cpw-new').value      = '';
+      document.getElementById('cpw-confirm').value  = '';
+      document.getElementById('cpw-error').textContent = '';
+      checkPwStrength('');
+      document.getElementById('change-pw-modal').style.display = 'flex';
+      setTimeout(() => document.getElementById('cpw-current').focus(), 100);
+    }
+
+    function closeChangePasswordModal(e) {
+      if (e instanceof Event && e.target !== document.getElementById('change-pw-modal')) return;
+      document.getElementById('change-pw-modal').style.display = 'none';
+    }
+
+    function togglePwVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = 'Hide';
+      } else {
+        input.type = 'password';
+        btn.textContent = 'Show';
+      }
+    }
+
+    function checkPwStrength(pw) {
+      const bars  = [1,2,3,4].map(i => document.getElementById('cpw-bar-' + i));
+      const label = document.getElementById('cpw-strength-label');
+      let score = 0;
+      if (pw.length >= 8)              score++;
+      if (/[A-Z]/.test(pw))            score++;
+      if (/[0-9]/.test(pw))            score++;
+      if (/[^A-Za-z0-9]/.test(pw))     score++;
+
+      const colors = ['#e53935','#ef6c00','#f9a825','#2e7d32'];
+      const labels = ['Weak','Fair','Good','Strong'];
+      bars.forEach((b, i) => {
+        b.style.background = i < score ? colors[score - 1] : 'var(--border)';
+      });
+      label.textContent = pw.length ? labels[score - 1] || '' : '';
+      label.style.color = pw.length ? colors[score - 1] : 'var(--text-faint)';
+    }
+
+    async function saveChangePassword() {
+      const current  = document.getElementById('cpw-current').value;
+      const newPw    = document.getElementById('cpw-new').value;
+      const confirm  = document.getElementById('cpw-confirm').value;
+      const errEl    = document.getElementById('cpw-error');
+      errEl.textContent = '';
+
+      if (!current || !newPw || !confirm) {
+        errEl.textContent = 'Please fill in all fields.'; return;
+      }
+      if (newPw.length < 8) {
+        errEl.textContent = 'New password must be at least 8 characters.'; return;
+      }
+      if (newPw !== confirm) {
+        errEl.textContent = 'New passwords do not match.'; return;
+      }
+      if (current === newPw) {
+        errEl.textContent = 'New password must differ from current password.'; return;
+      }
+
+      const btn = document.getElementById('cpw-save-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>';
+
+      try {
+        const result = await api({
+          action: 'changePassword',
+          currentPassword: current,
+          newPassword: newPw,
+        });
+
+        if (result.success) {
+          document.getElementById('change-pw-modal').style.display = 'none';
+          showToast('Password updated successfully. Please log in again.', 'success');
+          setTimeout(() => { sessionStorage.clear(); window.location.href = 'index.html'; }, 2200);
+        } else {
+          errEl.textContent = result.error || 'Failed to update password.';
+        }
+      } catch (err) {
+        errEl.textContent = 'Network error. Please try again.';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Update Password';
+      }
     }
 
     // ── Init ───────────────────────────────────────────────────
