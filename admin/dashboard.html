@@ -618,16 +618,16 @@
         <div class="stat-value" id="stat-total">—</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">For Review</div>
-        <div class="stat-value" id="stat-pending" style="color: #888;">—</div>
+        <div class="stat-label">For Inspection</div>
+        <div class="stat-value" id="stat-inspection" style="color: #3949ab;">—</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Approved</div>
         <div class="stat-value" id="stat-approved" style="color: #2e7d32;">—</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Disapproved</div>
-        <div class="stat-value" id="stat-disapproved" style="color: #c62828;">—</div>
+        <div class="stat-label">Disapproved – Sanitary Violation</div>
+        <div class="stat-value" id="stat-disapproved-san" style="color: #880e4f;">—</div>
       </div>
     </div>
 
@@ -985,10 +985,10 @@
 
     // ── Stats ───────────────────────────────────────────────────
     function updateStats() {
-      document.getElementById('stat-total').textContent       = allEntries.length;
-      document.getElementById('stat-pending').textContent     = allEntries.filter(e => !e['Status'] || e['Status'] === '').length;
-      document.getElementById('stat-approved').textContent    = allEntries.filter(e => e['Status'] === 'Approved').length;
-      document.getElementById('stat-disapproved').textContent = allEntries.filter(e => e['Status'] === 'Disapproved').length;
+      document.getElementById('stat-total').textContent          = allEntries.length;
+      document.getElementById('stat-inspection').textContent     = allEntries.filter(e => e['Status'] === 'For Inspection').length;
+      document.getElementById('stat-approved').textContent       = allEntries.filter(e => e['Status'] === 'Approved').length;
+      document.getElementById('stat-disapproved-san').textContent = allEntries.filter(e => e['Status'] === 'Pending - for compliance with noted sanitary violation').length;
     }
 
     // ── Filters ─────────────────────────────────────────────────
