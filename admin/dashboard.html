@@ -448,7 +448,6 @@
     .modal-field select:focus,
     .modal-field textarea:focus { border-color: #aaa; }
 
-    /* Status hint chip shown below the select */
     .status-hint {
       display: inline-flex;
       align-items: center;
@@ -618,8 +617,6 @@
         <div class="stat-label">Total Applications</div>
         <div class="stat-value" id="stat-total">—</div>
       </div>
-      <!-- CHANGED: was "For Inspection" counting only that status;
-           now "Pending Review" counts entries with no status set yet -->
       <div class="stat-card">
         <div class="stat-label">For Review</div>
         <div class="stat-value" id="stat-pending" style="color: #888;">—</div>
@@ -710,7 +707,6 @@
 
           <div class="modal-field">
             <label>Status</label>
-            <!-- CHANGED: default option is blank — admin must explicitly choose a status -->
             <select id="edit-status" onchange="updateStatusHint()">
               <option value="" selected>— Select status —</option>
               <option value="For Inspection">For Inspection</option>
@@ -988,7 +984,6 @@
     }
 
     // ── Stats ───────────────────────────────────────────────────
-    // CHANGED: stat-pending now counts entries with no status set (blank/null)
     function updateStats() {
       document.getElementById('stat-total').textContent       = allEntries.length;
       document.getElementById('stat-pending').textContent     = allEntries.filter(e => !e['Status'] || e['Status'] === '').length;
@@ -1127,7 +1122,6 @@
           <div class="info-val">${v || '—'}</div>
         </div>`).join('');
 
-      // CHANGED: always default to blank; only set if entry has a saved status
       document.getElementById('edit-status').value      = entry['Status'] || '';
       document.getElementById('edit-attachments').value = entry['Attachments'] || '';
       document.getElementById('edit-remarks').value     = entry['Remarks'] || '';
@@ -1137,7 +1131,6 @@
       document.getElementById('edit-modal').style.display = 'flex';
     }
 
-    // CHANGED: null-safe — hides hint when status is blank
     function updateStatusHint() {
       const val  = document.getElementById('edit-status').value;
       const meta = getStatusMeta(val);
@@ -1149,20 +1142,17 @@
       hint.textContent = meta.value;
       hint.style.background = meta.badgeBg;
       hint.style.color = meta.badgeColor;
-      // Only show hint for the long compliance status label
       hint.style.display = val === 'Pending - for compliance with noted sanitary violation' ? 'inline-flex' : 'none';
     }
 
     function closeEditModal(e) {
-      // Only close when called directly (no event), from the × / Cancel buttons,
-      // or when the click landed exactly on the dark overlay backdrop itself.
       if (e instanceof Event && e.target !== document.getElementById('edit-modal')) return;
       document.getElementById('edit-modal').style.display = 'none';
       editingRow = null;
     }
 
     async function saveEdit() {
-      const rowToSave = editingRow;   // snapshot before any async gap
+      const rowToSave = editingRow;
       if (rowToSave === null) return;
 
       const btn = document.getElementById('save-btn');
@@ -1352,17 +1342,29 @@
       }
 
       const total    = entries.length;
-      const byStatus = {};
       const byType   = {};
-      STATUSES.forEach(s => byStatus[s.value] = 0);
       entries.forEach(e => {
-        const s = e['Status'] || '';
-        byStatus[s] = (byStatus[s] || 0) + 1;
         const t = e['Application Type'] || 'Unknown';
-        byType[t]   = (byType[t] || 0) + 1;
+        byType[t] = (byType[t] || 0) + 1;
       });
 
-      // CHANGED: include a "No Status" group in the report for blank-status entries
+      // ── Summary stat counts (4 cards only) ──
+      const forInspectionCount  = entries.filter(e => (e['Status'] || '') === 'For Inspection').length;
+      const approvedCount       = entries.filter(e => (e['Status'] || '') === 'Approved').length;
+      const disapprovedSanCount = entries.filter(e => (e['Status'] || '') === 'Pending - for compliance with noted sanitary violation').length;
+
+      const statCards = [
+        ['Total',                            total,              '#1a1a1a'],
+        ['For Inspection',                   forInspectionCount, '#3949ab'],
+        ['Approved',                         approvedCount,      '#2e7d32'],
+        ['Disapproved – Sanitary Violation', disapprovedSanCount,'#880e4f'],
+      ].map(([label, val, color]) => `
+        <div style="border:0.5px solid #e0ddd6; border-radius:9px; padding:12px 14px; background:#fafaf8;">
+          <div style="font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#999; margin-bottom:5px;">${label}</div>
+          <div style="font-size:22px; font-weight:600; color:${color}; letter-spacing:-0.02em;">${val}</div>
+        </div>`).join('');
+
+      // ── Applicant sections grouped by status ──
       const noStatusEntries = entries.filter(e => !e['Status'] || e['Status'] === '');
       let applicantSections = '';
 
@@ -1460,18 +1462,6 @@
         hour:'2-digit', minute:'2-digit'
       });
 
-      // Build stat summary cards — includes "Pending Review" for blank-status entries
-      const pendingCount = entries.filter(e => !e['Status'] || e['Status'] === '').length;
-      const statCards = [
-        ['Total', total, '#1a1a1a'],
-        ['Pending Review', pendingCount, '#888'],
-        ...STATUSES.map(s => [s.label, byStatus[s.value] || 0, s.reportColor])
-      ].map(([label, val, color]) => `
-        <div style="border:0.5px solid #e0ddd6; border-radius:9px; padding:12px 14px; background:#fafaf8;">
-          <div style="font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#999; margin-bottom:5px;">${label}</div>
-          <div style="font-size:22px; font-weight:600; color:${color}; letter-spacing:-0.02em;">${val}</div>
-        </div>`).join('');
-
       const html = `<!DOCTYPE html>
 <html>
 <head>
@@ -1511,7 +1501,7 @@
 
   <div style="margin-bottom:28px;">
     <div style="font-size:10px; font-weight:500; text-transform:uppercase; letter-spacing:0.08em; color:#888; margin-bottom:12px;">Summary</div>
-    <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:10px;">${statCards}</div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;">${statCards}</div>
   </div>
 
   <div style="margin-bottom:32px;">
