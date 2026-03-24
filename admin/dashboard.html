@@ -1230,6 +1230,7 @@
 
       // Audit timestamp logic:
       // reviewedAt — stamped on first status change (including direct-to-Approved)
+      //              also backfills if entry already has a status but no timestamp (legacy entries)
       // approvedAt — stamped/updated every time status becomes Approved
       const now = new Date().toISOString();
 
@@ -1237,14 +1238,17 @@
       let approvedAt = entry ? (entry['Approved At'] || '') : '';
 
       if (newStatus && newStatus !== oldStatus) {
-        // Stamp reviewedAt on first ever status change
-        if (!reviewedAt) {
+        // Status is changing — stamp reviewedAt if not yet set
+        if (!reviewedAt) reviewedAt = now;
+        // Stamp approvedAt whenever Approved is set
+        if (newStatus === 'Approved') approvedAt = now;
+      } else if (newStatus && newStatus === oldStatus) {
+        // Status unchanged — backfill missing timestamps for legacy entries
+        if (!reviewedAt && newStatus !== '' && newStatus !== 'Approved') {
           reviewedAt = now;
         }
-        // Stamp approvedAt whenever Approved is set
-        if (newStatus === 'Approved') {
-          approvedAt = now;
-        }
+        if (!reviewedAt && newStatus === 'Approved') reviewedAt = now;
+        if (!approvedAt && newStatus === 'Approved') approvedAt = now;
       }
 
       const btn = document.getElementById('save-btn');
