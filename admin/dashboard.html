@@ -74,6 +74,7 @@
         <input class="search-input" id="search-input" placeholder="Search by name, business, ID…" oninput="applyFilters()">
         <select class="filter-select" id="filter-status" onchange="applyFilters()">
           <option value="">All statuses</option>
+          <option>Under Review</option>
           <option>For Inspection</option>
           <option>Disapproved - for compliance with noted sanitary violation</option>
           <option>Approved</option>
@@ -152,6 +153,7 @@
             <label>Status</label>
             <select id="edit-status" onchange="updateStatusHint()">
               <option value="" selected>— Select status —</option>
+              <option value="Under Review">Under Review</option>
               <option value="For Inspection">For Inspection</option>
               <option value="Disapproved - for compliance with noted sanitary violation">Disapproved - for compliance with noted sanitary violation</option>
               <option value="Approved">Approved</option>
