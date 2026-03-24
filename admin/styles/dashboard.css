@@ -21,7 +21,6 @@ body {
   color: var(--text);
 }
 
-/* ── Top bar ── */
 .topbar {
   background: var(--surface);
   border-bottom: 0.5px solid var(--border);
@@ -46,7 +45,6 @@ body {
 }
 
 .topbar-title { font-size: 14px; font-weight: 500; }
-
 .topbar-right { display: flex; align-items: center; gap: 12px; }
 
 .admin-badge {
@@ -71,11 +69,9 @@ body {
 
 .btn-outline { border: 0.5px solid var(--border); background: transparent; color: var(--text-muted); }
 .btn-outline:hover { background: var(--bg); }
-
 .btn-dark { border: none; background: var(--accent); color: #fff; font-weight: 500; }
 .btn-dark:hover { opacity: 0.82; }
 .btn-dark:disabled { opacity: 0.4; cursor: not-allowed; }
-
 .btn-report {
   display: flex; align-items: center; gap: 6px;
   border: 0.5px solid var(--border);
@@ -85,10 +81,8 @@ body {
 }
 .btn-report:hover { background: var(--bg); }
 
-/* ── Main layout ── */
 .main { padding: 24px; max-width: 1400px; margin: 0 auto; }
 
-/* ── Stats row ── */
 .stats-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -106,7 +100,6 @@ body {
 .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 6px; }
 .stat-value { font-size: 24px; font-weight: 500; letter-spacing: -0.02em; }
 
-/* ── Toolbar ── */
 .toolbar {
   display: flex; align-items: center; justify-content: space-between;
   gap: 10px; margin-bottom: 14px; flex-wrap: wrap;
@@ -133,7 +126,6 @@ body {
   cursor: pointer; outline: none; appearance: none;
 }
 
-/* ── Table ── */
 .table-wrap {
   background: var(--surface);
   border: 0.5px solid var(--border);
@@ -142,9 +134,7 @@ body {
 }
 
 .table-scroll { overflow-x: auto; }
-
 table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-
 thead { background: var(--bg); border-bottom: 0.5px solid var(--border); }
 
 th {
@@ -194,7 +184,7 @@ tr:hover td { background: #fafaf8; }
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--text-faint);
-  min-width: 56px;
+  min-width: 80px;  /* wider to fit "Under Review" */
 }
 
 /* ── Status badges ── */
@@ -204,6 +194,8 @@ tr:hover td { background: #fafaf8; }
   font-size: 11px; font-weight: 500; white-space: nowrap;
 }
 
+/* NEW: Under Review */
+.status-UnderReview      { background: #fff8e1; color: #f57f17; }
 .status-ForInspection    { background: #e8eaf6; color: #3949ab; }
 .status-PendingCompliance { background: #fce4ec; color: #880e4f; }
 .status-Approved         { background: #e8f5e9; color: #2e7d32; }
@@ -220,7 +212,6 @@ tr:hover td { background: #fafaf8; }
 .empty-state { text-align: center; padding: 48px 24px; color: var(--text-muted); }
 .empty-label { font-size: 13px; }
 
-/* ── Pagination ── */
 .pagination {
   display: flex; align-items: center; justify-content: space-between;
   padding: 12px 14px;
@@ -296,11 +287,7 @@ tr:hover td { background: #fafaf8; }
 .info-val { font-size: 13px; }
 
 /* ── Audit timeline in modal ── */
-.audit-timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
+.audit-timeline { display: flex; flex-direction: column; gap: 0; }
 
 .audit-step {
   display: flex;
@@ -315,9 +302,7 @@ tr:hover td { background: #fafaf8; }
 .audit-step::before {
   content: '';
   position: absolute;
-  left: 11px;
-  top: 22px;
-  bottom: 0;
+  left: 11px; top: 22px; bottom: 0;
   width: 1px;
   background: var(--border-light);
 }
@@ -329,31 +314,16 @@ tr:hover td { background: #fafaf8; }
   border: 1.5px solid var(--border);
   background: var(--surface);
   display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  font-size: 10px;
-  position: relative;
-  z-index: 1;
+  flex-shrink: 0; font-size: 10px;
+  position: relative; z-index: 1;
 }
-
 .audit-step-icon.done { border-color: transparent; }
 
 .audit-step-content { padding-top: 3px; }
 
-.audit-step-label {
-  font-size: 11px; font-weight: 500;
-  color: var(--text); margin-bottom: 2px;
-}
-
-.audit-step-time {
-  font-size: 11px;
-  color: var(--text-muted);
-}
-
-.audit-step-pending {
-  font-size: 11px;
-  color: var(--text-faint);
-  font-style: italic;
-}
+.audit-step-label { font-size: 11px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+.audit-step-time  { font-size: 11px; color: var(--text-muted); }
+.audit-step-pending { font-size: 11px; color: var(--text-faint); font-style: italic; }
 
 .modal-field { margin-bottom: 10px; }
 
@@ -396,11 +366,9 @@ tr:hover td { background: #fafaf8; }
   border-top: 0.5px solid var(--border-light);
 }
 
-/* ── Add entry form ── */
 .add-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .add-grid .span-2 { grid-column: span 2; }
 
-/* ── Toast ── */
 .toast {
   position: fixed; bottom: 24px; left: 50%;
   transform: translateX(-50%);
@@ -454,26 +422,13 @@ tr:hover td { background: #fafaf8; }
   padding: 9px 12px; border: 0.5px solid var(--border-light); margin-top: 4px;
 }
 
-@media (max-width: 700px) {
-  .stats-row { grid-template-columns: 1fr 1fr; }
-  .main { padding: 16px; }
-  .topbar { padding: 0 16px; }
-  .add-grid { grid-template-columns: 1fr; }
-  .add-grid .span-2 { grid-column: span 1; }
-  .info-grid { grid-template-columns: 1fr; }
-  .report-type-grid { grid-template-columns: 1fr; }
-  .date-range-row { grid-template-columns: 1fr; }
-}
-/* ── Audit attribution (append to end of dashboard.css) ── */
-
-/* "· by Admin Name" label in table audit trail */
+/* ── Audit attribution ── */
 .audit-by {
   color: #aaa;
   font-size: 10px;
   font-style: italic;
 }
 
-/* "by Admin Name" in modal audit timeline */
 .audit-step-by {
   display: inline-block;
   margin-left: 5px;
@@ -485,4 +440,15 @@ tr:hover td { background: #fafaf8; }
   font-weight: 500;
   color: #666;
   font-style: normal;
+}
+
+@media (max-width: 700px) {
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .main { padding: 16px; }
+  .topbar { padding: 0 16px; }
+  .add-grid { grid-template-columns: 1fr; }
+  .add-grid .span-2 { grid-column: span 1; }
+  .info-grid { grid-template-columns: 1fr; }
+  .report-type-grid { grid-template-columns: 1fr; }
+  .date-range-row { grid-template-columns: 1fr; }
 }
