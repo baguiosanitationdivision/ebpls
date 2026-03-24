@@ -464,3 +464,25 @@ tr:hover td { background: #fafaf8; }
   .report-type-grid { grid-template-columns: 1fr; }
   .date-range-row { grid-template-columns: 1fr; }
 }
+/* ── Audit attribution (append to end of dashboard.css) ── */
+
+/* "· by Admin Name" label in table audit trail */
+.audit-by {
+  color: #aaa;
+  font-size: 10px;
+  font-style: italic;
+}
+
+/* "by Admin Name" in modal audit timeline */
+.audit-step-by {
+  display: inline-block;
+  margin-left: 5px;
+  padding: 1px 7px;
+  border-radius: 20px;
+  background: #f5f4f0;
+  border: 0.5px solid #e0ddd6;
+  font-size: 10px;
+  font-weight: 500;
+  color: #666;
+  font-style: normal;
+}
