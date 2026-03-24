@@ -7,7 +7,8 @@ const STATUSES = [
     badgeBg: '#e8eaf6', badgeColor: '#3949ab',
     reportBg: '#e8eaf6', reportColor: '#3949ab',
     auditColor: '#3949ab', auditIcon: '🔍',
-    setsTimestamp: 'reviewedAt',
+    // Which "by/at" fields this status writes to
+    byField: 'inspectedBy', atField: 'inspectedAt',
   },
   {
     value: 'Disapproved - for compliance with noted sanitary violation',
@@ -16,7 +17,7 @@ const STATUSES = [
     badgeBg: '#fce4ec', badgeColor: '#880e4f',
     reportBg: '#fce4ec', reportColor: '#880e4f',
     auditColor: '#880e4f', auditIcon: '⚠️',
-    setsTimestamp: 'reviewedAt',
+    byField: 'disapprovedBy', atField: 'disapprovedAt',
   },
   {
     value: 'Approved',
@@ -25,7 +26,7 @@ const STATUSES = [
     badgeBg: '#e8f5e9', badgeColor: '#2e7d32',
     reportBg: '#e8f5e9', reportColor: '#2e7d32',
     auditColor: '#2e7d32', auditIcon: '✓',
-    setsTimestamp: 'approvedAt',
+    byField: 'approvedBy', atField: 'approvedAt',
   },
   {
     value: 'Disapproved',
@@ -34,7 +35,7 @@ const STATUSES = [
     badgeBg: '#ffebee', badgeColor: '#c62828',
     reportBg: '#ffebee', reportColor: '#c62828',
     auditColor: '#c62828', auditIcon: '✕',
-    setsTimestamp: 'reviewedAt',
+    byField: 'disapprovedBy', atField: 'disapprovedAt',
   },
 ];
 
@@ -137,23 +138,27 @@ function applyFilters() {
 
 // ── Build compact audit trail for table ───────────────────
 function buildAuditTrailCell(entry) {
-  const submittedAt = entry['Timestamp'];
-  const reviewedAt  = entry['Reviewed At'];
-  const approvedAt  = entry['Approved At'];
+  const submittedAt  = entry['Timestamp'];
+  const inspectedAt  = entry['Inspected At'];
+  const inspectedBy  = entry['Inspected By'];
+  const approvedAt   = entry['Approved At'];
+  const approvedBy   = entry['Approved By'];
+  const disapprovedAt = entry['Disapproved At'];
+  const disapprovedBy = entry['Disapproved By'];
 
   const rows = [];
 
   rows.push(`<div class="audit-row">
-    <span class="audit-dot" style="background:#888;"></span>
+    <span class="audit-dot" style="background:#aaa;"></span>
     <span class="audit-label">Submitted</span>
     <span style="font-size:10.5px;">${fmtTs(submittedAt) || '—'}</span>
   </div>`);
 
-  if (reviewedAt) {
+  if (inspectedAt) {
     rows.push(`<div class="audit-row">
       <span class="audit-dot" style="background:#3949ab;"></span>
-      <span class="audit-label">Reviewed</span>
-      <span style="font-size:10.5px;">${fmtTs(reviewedAt)}</span>
+      <span class="audit-label">Inspection</span>
+      <span style="font-size:10.5px;">${fmtTs(inspectedAt)}${inspectedBy ? `<span class="audit-by"> · ${inspectedBy}</span>` : ''}</span>
     </div>`);
   }
 
@@ -161,7 +166,15 @@ function buildAuditTrailCell(entry) {
     rows.push(`<div class="audit-row">
       <span class="audit-dot" style="background:#2e7d32;"></span>
       <span class="audit-label">Approved</span>
-      <span style="font-size:10.5px;">${fmtTs(approvedAt)}</span>
+      <span style="font-size:10.5px;">${fmtTs(approvedAt)}${approvedBy ? `<span class="audit-by"> · ${approvedBy}</span>` : ''}</span>
+    </div>`);
+  }
+
+  if (disapprovedAt) {
+    rows.push(`<div class="audit-row">
+      <span class="audit-dot" style="background:#c62828;"></span>
+      <span class="audit-label">Disapproved</span>
+      <span style="font-size:10.5px;">${fmtTs(disapprovedAt)}${disapprovedBy ? `<span class="audit-by"> · ${disapprovedBy}</span>` : ''}</span>
     </div>`);
   }
 
@@ -256,16 +269,13 @@ function updatePagination() {
 
 // ── Build audit timeline for modal ─────────────────────────
 function buildAuditTimeline(entry) {
-  const submittedAt = entry['Timestamp'];
-  const reviewedAt  = entry['Reviewed At'];
-  const approvedAt  = entry['Approved At'];
-  const status      = entry['Status'] || '';
-
-  let reviewLabel = 'Reviewed';
-  if (status === 'For Inspection') reviewLabel = 'Labelled: For Inspection';
-  else if (status === 'Disapproved - for compliance with noted sanitary violation') reviewLabel = 'Labelled: Disapproved (Sanitary Violation)';
-  else if (status === 'Disapproved') reviewLabel = 'Labelled: Disapproved';
-  else if (reviewedAt) reviewLabel = 'Reviewed / Labelled';
+  const submittedAt   = entry['Timestamp'];
+  const inspectedAt   = entry['Inspected At'];
+  const inspectedBy   = entry['Inspected By'];
+  const approvedAt    = entry['Approved At'];
+  const approvedBy    = entry['Approved By'];
+  const disapprovedAt = entry['Disapproved At'];
+  const disapprovedBy = entry['Disapproved By'];
 
   const steps = [
     {
@@ -273,25 +283,51 @@ function buildAuditTimeline(entry) {
       iconBg: '#f5f4f0',
       label: 'Application Submitted',
       time: submittedAt,
+      by: null,
       done: !!submittedAt,
     },
     {
       icon: '🔍',
-      iconBg: reviewedAt ? '#e8eaf6' : '#f5f4f0',
-      label: reviewLabel,
-      time: reviewedAt,
-      done: !!reviewedAt,
+      iconBg: inspectedAt ? '#e8eaf6' : '#f5f4f0',
+      label: 'Flagged for Inspection',
+      time: inspectedAt,
+      by: inspectedBy,
+      done: !!inspectedAt,
     },
     {
       icon: '✓',
       iconBg: approvedAt ? '#e8f5e9' : '#f5f4f0',
       label: 'Approved',
       time: approvedAt,
+      by: approvedBy,
       done: !!approvedAt,
     },
+    {
+      icon: '✕',
+      iconBg: disapprovedAt ? '#ffebee' : '#f5f4f0',
+      label: 'Disapproved',
+      time: disapprovedAt,
+      by: disapprovedBy,
+      done: !!disapprovedAt,
+    },
+  ].filter(step => step.done || step.label === 'Application Submitted' || step.label === 'Flagged for Inspection' || step.label === 'Approved');
+
+  // Only show steps that are relevant — always show Submitted; show others only if done
+  const relevantSteps = [
+    { icon: '📋', iconBg: '#f5f4f0', label: 'Application Submitted', time: submittedAt, by: null, done: !!submittedAt },
+    ...(inspectedAt ? [{ icon: '🔍', iconBg: '#e8eaf6', label: 'Flagged for Inspection', time: inspectedAt, by: inspectedBy, done: true }] : []),
+    ...(approvedAt  ? [{ icon: '✓',  iconBg: '#e8f5e9', label: 'Approved',               time: approvedAt,  by: approvedBy,   done: true }] : []),
+    ...(disapprovedAt ? [{ icon: '✕', iconBg: '#ffebee', label: 'Disapproved',            time: disapprovedAt, by: disapprovedBy, done: true }] : []),
   ];
 
-  return steps.map(step => `
+  if (relevantSteps.length === 1) {
+    // Still pending — show pending step
+    relevantSteps.push({
+      icon: '…', iconBg: '#f5f4f0', label: 'Awaiting Review', time: null, by: null, done: false,
+    });
+  }
+
+  return relevantSteps.map(step => `
     <div class="audit-step">
       <div class="audit-step-icon done" style="background:${step.iconBg}; font-size:11px;">
         ${step.icon}
@@ -299,7 +335,10 @@ function buildAuditTimeline(entry) {
       <div class="audit-step-content">
         <div class="audit-step-label">${step.label}</div>
         ${step.done
-          ? `<div class="audit-step-time">${fmtTs(step.time)}</div>`
+          ? `<div class="audit-step-time">
+               ${fmtTs(step.time)}
+               ${step.by ? `<span class="audit-step-by">by ${step.by}</span>` : ''}
+             </div>`
           : `<div class="audit-step-pending">Not yet recorded</div>`
         }
       </div>
@@ -367,16 +406,39 @@ async function saveEdit() {
   const oldStatus = entry ? (entry['Status'] || '') : '';
 
   const now = new Date().toISOString();
-  let reviewedAt = entry ? (entry['Reviewed At'] || '') : '';
-  let approvedAt = entry ? (entry['Approved At'] || '') : '';
 
+  // Preserve existing per-action timestamps and attributions
+  let inspectedAt   = entry['Inspected At']   || '';
+  let inspectedBy   = entry['Inspected By']   || '';
+  let approvedAt    = entry['Approved At']    || '';
+  let approvedBy    = entry['Approved By']    || '';
+  let disapprovedAt = entry['Disapproved At'] || '';
+  let disapprovedBy = entry['Disapproved By'] || '';
+
+  // Only stamp when status actually changes (or fields are empty for this action)
   if (newStatus && newStatus !== oldStatus) {
-    if (!reviewedAt) reviewedAt = now;
-    if (newStatus === 'Approved') approvedAt = now;
+    if (newStatus === 'For Inspection') {
+      if (!inspectedAt) { inspectedAt = now; inspectedBy = adminFullName; }
+    } else if (newStatus === 'Approved') {
+      if (!approvedAt) { approvedAt = now; approvedBy = adminFullName; }
+    } else if (
+      newStatus === 'Disapproved' ||
+      newStatus === 'Disapproved - for compliance with noted sanitary violation'
+    ) {
+      if (!disapprovedAt) { disapprovedAt = now; disapprovedBy = adminFullName; }
+    }
   } else if (newStatus && newStatus === oldStatus) {
-    if (!reviewedAt && newStatus !== '' && newStatus !== 'Approved') reviewedAt = now;
-    if (!reviewedAt && newStatus === 'Approved') reviewedAt = now;
-    if (!approvedAt && newStatus === 'Approved') approvedAt = now;
+    // Same status — fill in missing attribution if not yet recorded
+    if (newStatus === 'For Inspection' && !inspectedAt) {
+      inspectedAt = now; inspectedBy = adminFullName;
+    } else if (newStatus === 'Approved' && !approvedAt) {
+      approvedAt = now; approvedBy = adminFullName;
+    } else if (
+      (newStatus === 'Disapproved' || newStatus === 'Disapproved - for compliance with noted sanitary violation')
+      && !disapprovedAt
+    ) {
+      disapprovedAt = now; disapprovedBy = adminFullName;
+    }
   }
 
   const btn = document.getElementById('save-btn');
@@ -388,12 +450,17 @@ async function saveEdit() {
       action: 'updateEntry',
       rowIndex: rowToSave,
       data: {
-        status:      newStatus,
-        attachments: document.getElementById('edit-attachments').value,
-        remarks:     document.getElementById('edit-remarks').value,
-        adminNotes:  document.getElementById('edit-admin-notes').value,
-        reviewedAt,
-        approvedAt,
+        status:        newStatus,
+        attachments:   document.getElementById('edit-attachments').value,
+        remarks:       document.getElementById('edit-remarks').value,
+        adminNotes:    document.getElementById('edit-admin-notes').value,
+        processedBy:   adminFullName,
+        // Per-action attribution
+        inspectedAt,   inspectedBy,
+        approvedAt,    approvedBy,
+        disapprovedAt, disapprovedBy,
+        // Keep legacy field for backward compat
+        reviewedAt:    inspectedAt || approvedAt || disapprovedAt || '',
       }
     });
 
@@ -442,6 +509,7 @@ async function saveAdd() {
     businessAddress: document.getElementById('add-address').value.trim(),
     barangay:        document.getElementById('add-barangay').value.trim(),
     lineOfBusiness:  document.getElementById('add-lob').value,
+    addedBy:         adminFullName,
   };
 
   const btn = document.getElementById('add-btn');
@@ -493,13 +561,13 @@ function selectReportType(btn, type) {
 
   if (type === 'today') {
     dateSection.style.display = 'none';
-    note.textContent = "Generates today's report — statistics summary followed by applicants grouped by status, with full audit trail per entry.";
+    note.textContent = "Generates today's report — statistics summary followed by applicants grouped by status, with full audit trail and attribution per entry.";
   } else if (type === 'range') {
     dateSection.style.display = '';
-    note.textContent = "Generates a report for entries submitted within the selected date range, with audit trail per entry.";
+    note.textContent = "Generates a report for entries submitted within the selected date range, with audit trail and attribution per entry.";
   } else {
     dateSection.style.display = 'none';
-    note.textContent = "Generates a complete report of all applications on record, grouped by status, with audit trail per entry.";
+    note.textContent = "Generates a complete report of all applications on record, grouped by status, with full audit trail and attribution per entry.";
   }
 }
 
@@ -526,13 +594,16 @@ function fmtDate(dateStr) {
 }
 
 function buildReportAuditTrail(entry) {
-  const submittedAt = entry['Timestamp'];
-  const reviewedAt  = entry['Reviewed At'];
-  const approvedAt  = entry['Approved At'];
-  const processedBy = entry['Processed By'];
+  const submittedAt   = entry['Timestamp'];
+  const inspectedAt   = entry['Inspected At'];
+  const inspectedBy   = entry['Inspected By'];
+  const approvedAt    = entry['Approved At'];
+  const approvedBy    = entry['Approved By'];
+  const disapprovedAt = entry['Disapproved At'];
+  const disapprovedBy = entry['Disapproved By'];
 
   function fmt(ts) {
-    if (!ts && ts !== 0) return null;
+    if (!ts) return null;
     const d = new Date(ts);
     if (isNaN(d.getTime())) return String(ts);
     return d.toLocaleString('en-PH', {
@@ -548,27 +619,25 @@ function buildReportAuditTrail(entry) {
   }
 
   const steps = [
-    { label: 'Submitted',           time: submittedAt, color: '#555',    dot: '#aaa' },
-    { label: 'Reviewed / Labelled', time: reviewedAt,  color: '#3949ab', dot: '#3949ab' },
-    { label: 'Approved',            time: approvedAt,  color: '#2e7d32', dot: '#2e7d32' },
+    { label: 'Submitted',        time: submittedAt,   by: null,          color: '#555',    dot: '#aaa'    },
+    { label: 'For Inspection',   time: inspectedAt,   by: inspectedBy,   color: '#3949ab', dot: '#3949ab' },
+    { label: 'Approved',         time: approvedAt,    by: approvedBy,    color: '#2e7d32', dot: '#2e7d32' },
+    { label: 'Disapproved',      time: disapprovedAt, by: disapprovedBy, color: '#c62828', dot: '#c62828' },
   ];
 
   const rendered = steps.map(s => {
     if (!hasTime(s.time)) return '';
+    const byStr = s.by ? ` <span style="font-size:9.5px;opacity:0.75;">by ${s.by}</span>` : '';
     return `<span style="display:inline-flex; align-items:center; gap:5px; margin-right:14px; font-size:10.5px; color:${s.color};">
       <span style="width:5px;height:5px;border-radius:50%;background:${s.dot};display:inline-block;flex-shrink:0;"></span>
       <strong style="font-size:9.5px;text-transform:uppercase;letter-spacing:0.05em;margin-right:3px;">${s.label}</strong>
-      ${fmt(s.time)}
+      ${fmt(s.time)}${byStr}
     </span>`;
   }).filter(Boolean).join('');
 
-  const processedStr = processedBy
-    ? `<span style="font-size:10px;color:#aaa;margin-left:4px;">· Processed by ${processedBy}</span>`
-    : '';
-
   if (!rendered) return '';
   return `<div style="margin-top:5px; padding-top:5px; border-top:0.5px solid #eee; display:flex; flex-wrap:wrap; align-items:center; gap:4px;">
-    ${rendered}${processedStr}
+    ${rendered}
   </div>`;
 }
 
@@ -638,45 +707,14 @@ function generateReport() {
   let applicantSections = '';
 
   if (noStatusEntries.length) {
-    const rows = noStatusEntries.map((e, i) => `
-      <tr style="border-bottom: 0.5px solid #eee;">
-        <td style="padding:8px 10px; font-size:11px; color:#888; font-family:monospace; vertical-align:top;">${i + 1}</td>
-        <td style="padding:8px 10px; font-size:11.5px; font-family:monospace; color:#555; vertical-align:top; white-space:nowrap;">${e['App ID'] || '—'}</td>
-        <td style="padding:8px 10px; font-size:12px; font-weight:500; vertical-align:top;">
-          ${e['Owner Name'] || '—'}
-          <div style="font-size:11px; color:#777; font-weight:400; margin-top:1px;">${e['Business Name'] || ''}</div>
-        </td>
-        <td style="padding:8px 10px; font-size:11.5px; color:#555; vertical-align:top;">${e['Application Type'] || '—'}</td>
-        <td style="padding:8px 10px; font-size:11.5px; color:#555; vertical-align:top;">${e['Barangay'] || '—'}</td>
-        <td style="padding:8px 10px; vertical-align:top;">
-          <div style="font-size:10.5px; color:#555; white-space:nowrap;">${fmtTs(e['Timestamp']) || '—'}</div>
-          ${buildReportAuditTrail(e)}
-        </td>
-      </tr>`).join('');
-
+    const rows = noStatusEntries.map((e, i) => buildReportRow(e, i)).join('');
     applicantSections += buildStatusSection('Pending Review', '#f5f4f0', '#888', noStatusEntries.length, rows);
   }
 
   STATUSES.forEach(({ value: status, label, reportBg, reportColor }) => {
     const group = entries.filter(e => (e['Status'] || '') === status);
     if (!group.length) return;
-
-    const rows = group.map((e, i) => `
-      <tr style="border-bottom: 0.5px solid #eee;">
-        <td style="padding:8px 10px; font-size:11px; color:#888; font-family:monospace; vertical-align:top;">${i + 1}</td>
-        <td style="padding:8px 10px; font-size:11.5px; font-family:monospace; color:#555; vertical-align:top; white-space:nowrap;">${e['App ID'] || '—'}</td>
-        <td style="padding:8px 10px; font-size:12px; font-weight:500; vertical-align:top;">
-          ${e['Owner Name'] || '—'}
-          <div style="font-size:11px; color:#777; font-weight:400; margin-top:1px;">${e['Business Name'] || ''}</div>
-        </td>
-        <td style="padding:8px 10px; font-size:11.5px; color:#555; vertical-align:top;">${e['Application Type'] || '—'}</td>
-        <td style="padding:8px 10px; font-size:11.5px; color:#555; vertical-align:top;">${e['Barangay'] || '—'}</td>
-        <td style="padding:8px 10px; vertical-align:top;">
-          <div style="font-size:10.5px; color:#555; white-space:nowrap;">${fmtTs(e['Timestamp']) || '—'}</div>
-          ${buildReportAuditTrail(e)}
-        </td>
-      </tr>`).join('');
-
+    const rows = group.map((e, i) => buildReportRow(e, i)).join('');
     applicantSections += buildStatusSection(status, reportBg, reportColor, group.length, rows);
   });
 
@@ -748,17 +786,13 @@ function generateReport() {
     </table>
   </div>
 
-  <div style="margin-bottom:24px; padding:10px 14px; background:#f9f9f7; border:0.5px solid #e8e6e0; border-radius:8px; display:flex; align-items:center; gap:20px;">
+  <div style="margin-bottom:24px; padding:10px 14px; background:#f9f9f7; border:0.5px solid #e8e6e0; border-radius:8px; display:flex; flex-wrap:wrap; align-items:center; gap:20px;">
     <span style="font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:#aaa; font-weight:500;">Audit Trail Legend</span>
-    <span style="font-size:10.5px; color:#555; display:flex; align-items:center; gap:5px;">
-      <span style="width:5px;height:5px;border-radius:50%;background:#aaa;display:inline-block;"></span> Submitted
-    </span>
-    <span style="font-size:10.5px; color:#3949ab; display:flex; align-items:center; gap:5px;">
-      <span style="width:5px;height:5px;border-radius:50%;background:#3949ab;display:inline-block;"></span> Reviewed / Labelled
-    </span>
-    <span style="font-size:10.5px; color:#2e7d32; display:flex; align-items:center; gap:5px;">
-      <span style="width:5px;height:5px;border-radius:50%;background:#2e7d32;display:inline-block;"></span> Approved
-    </span>
+    <span style="font-size:10.5px; color:#555; display:flex; align-items:center; gap:5px;"><span style="width:5px;height:5px;border-radius:50%;background:#aaa;display:inline-block;"></span> Submitted</span>
+    <span style="font-size:10.5px; color:#3949ab; display:flex; align-items:center; gap:5px;"><span style="width:5px;height:5px;border-radius:50%;background:#3949ab;display:inline-block;"></span> For Inspection</span>
+    <span style="font-size:10.5px; color:#2e7d32; display:flex; align-items:center; gap:5px;"><span style="width:5px;height:5px;border-radius:50%;background:#2e7d32;display:inline-block;"></span> Approved</span>
+    <span style="font-size:10.5px; color:#c62828; display:flex; align-items:center; gap:5px;"><span style="width:5px;height:5px;border-radius:50%;background:#c62828;display:inline-block;"></span> Disapproved</span>
+    <span style="font-size:10px; color:#aaa; margin-left:4px;">· Each action shows the admin who performed it</span>
   </div>
 
   <div>
@@ -778,6 +812,25 @@ function generateReport() {
   win.document.write(html);
   win.document.close();
   document.getElementById('report-modal').style.display = 'none';
+}
+
+// Helper: single report row
+function buildReportRow(e, i) {
+  return `
+    <tr style="border-bottom: 0.5px solid #eee;">
+      <td style="padding:8px 10px; font-size:11px; color:#888; font-family:monospace; vertical-align:top;">${i + 1}</td>
+      <td style="padding:8px 10px; font-size:11.5px; font-family:monospace; color:#555; vertical-align:top; white-space:nowrap;">${e['App ID'] || '—'}</td>
+      <td style="padding:8px 10px; font-size:12px; font-weight:500; vertical-align:top;">
+        ${e['Owner Name'] || '—'}
+        <div style="font-size:11px; color:#777; font-weight:400; margin-top:1px;">${e['Business Name'] || ''}</div>
+      </td>
+      <td style="padding:8px 10px; font-size:11.5px; color:#555; vertical-align:top;">${e['Application Type'] || '—'}</td>
+      <td style="padding:8px 10px; font-size:11.5px; color:#555; vertical-align:top;">${e['Barangay'] || '—'}</td>
+      <td style="padding:8px 10px; vertical-align:top;">
+        <div style="font-size:10.5px; color:#555; white-space:nowrap;">${fmtTs(e['Timestamp']) || '—'}</div>
+        ${buildReportAuditTrail(e)}
+      </td>
+    </tr>`;
 }
 
 // Helper: build a status section block for the report
