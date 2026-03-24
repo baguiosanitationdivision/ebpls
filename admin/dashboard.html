@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — eBPLS BHD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/dashboard.css">
+</head>
+<body>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-icon">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+          <rect x="3" y="2" width="14" height="16" rx="2" stroke="#888" stroke-width="1.2"/>
+          <line x1="6" y1="7" x2="14" y2="7" stroke="#888" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="6" y1="10" x2="14" y2="10" stroke="#888" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="6" y1="13" x2="10" y2="13" stroke="#888" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="topbar-title">eBPLS BHD — Admin Dashboard</span>
+    </div>
+    <div class="topbar-right">
+      <div class="admin-badge">
+        <div class="admin-dot"></div>
+        <span id="admin-name-display">—</span>
+      </div>
+      <button class="btn-sm btn-report" onclick="openReportModal()">
+        <svg width="13" height="13" viewBox="0 0 20 20" fill="none">
+          <rect x="3" y="2" width="14" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/>
+          <line x1="6" y1="7" x2="14" y2="7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="6" y1="10" x2="14" y2="10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="6" y1="13" x2="10" y2="13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        Generate Report
+      </button>
+      <a href="../index.html">
+        <button class="btn-sm btn-outline">View Form</button>
+      </a>
+      <button class="btn-sm btn-outline" onclick="openChangePasswordModal()">Change Password</button>
+      <button class="btn-sm btn-outline" onclick="logout()">Sign out</button>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Total Applications</div>
+        <div class="stat-value" id="stat-total">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">For Inspection</div>
+        <div class="stat-value" id="stat-inspection" style="color: #3949ab;">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Approved</div>
+        <div class="stat-value" id="stat-approved" style="color: #2e7d32;">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Disapproved – Sanitary Violation</div>
+        <div class="stat-value" id="stat-disapproved-san" style="color: #880e4f;">—</div>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <input class="search-input" id="search-input" placeholder="Search by name, business, ID…" oninput="applyFilters()">
+        <select class="filter-select" id="filter-status" onchange="applyFilters()">
+          <option value="">All statuses</option>
+          <option>For Inspection</option>
+          <option>Disapproved - for compliance with noted sanitary violation</option>
+          <option>Approved</option>
+        </select>
+        <select class="filter-select" id="filter-type" onchange="applyFilters()">
+          <option value="">All types</option>
+          <option>Renew</option>
+          <option>New</option>
+          <option>Additional Line of Business</option>
+          <option>Change Location</option>
+          <option>Change of Management</option>
+        </select>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn-sm btn-outline" onclick="loadEntries()">↻ Refresh</button>
+        <button class="btn-sm btn-dark" onclick="openAddModal()">+ Add Entry</button>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>App ID</th>
+              <th>Submitted</th>
+              <th>Type</th>
+              <th>Owner / Business</th>
+              <th>Barangay</th>
+              <th>Line of Business</th>
+              <th>Status</th>
+              <th>Audit Trail</th>
+              <th>Processed By</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <tr class="loading-row">
+              <td colspan="10">Loading entries…</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <span id="pagination-info">—</span>
+        <div class="page-btns" id="page-btns"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal-overlay" id="edit-modal" style="display:none;" onclick="closeEditModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <span class="modal-title">Edit Application</span>
+        <button class="modal-close" onclick="closeEditModal()">×</button>
+      </div>
+      <div class="modal-body">
+
+        <div class="modal-section">
+          <div class="modal-section-title">Application Info</div>
+          <div class="info-grid" id="modal-info"></div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title">Audit Trail</div>
+          <div class="audit-timeline" id="modal-audit-timeline"></div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title">Update</div>
+
+          <div class="modal-field">
+            <label>Status</label>
+            <select id="edit-status" onchange="updateStatusHint()">
+              <option value="" selected>— Select status —</option>
+              <option value="For Inspection">For Inspection</option>
+              <option value="Disapproved - for compliance with noted sanitary violation">Disapproved - for compliance with noted sanitary violation</option>
+              <option value="Approved">Approved</option>
+            </select>
+            <div id="status-hint" class="status-hint" style="display:none;"></div>
+          </div>
+
+          <div class="modal-field">
+            <label>Attachments</label>
+            <input type="text" id="edit-attachments" placeholder="e.g. document link, file name, reference number">
+          </div>
+
+          <div class="modal-field">
+            <label>Remarks</label>
+            <textarea id="edit-remarks" placeholder="Official remarks / notes for the applicant"></textarea>
+          </div>
+
+          <div class="modal-field">
+            <label>Admin Notes (internal)</label>
+            <textarea id="edit-admin-notes" placeholder="Internal notes, not visible to applicant"></textarea>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn-sm btn-outline" onclick="closeEditModal()">Cancel</button>
+        <button class="btn-sm btn-dark" id="save-btn" onclick="saveEdit()">Save changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Entry Modal -->
+  <div class="modal-overlay" id="add-modal" style="display:none;" onclick="closeAddModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <span class="modal-title">Add Entry Manually</span>
+        <button class="modal-close" onclick="closeAddModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="add-grid">
+
+          <div class="modal-field">
+            <label>Application Type</label>
+            <select id="add-app-type">
+              <option>Renew</option>
+              <option>New</option>
+              <option>Additional Line of Business</option>
+              <option>Change Location</option>
+              <option>Change of Management</option>
+            </select>
+          </div>
+
+          <div class="modal-field">
+            <label>Owner Type</label>
+            <select id="add-owner-type" onchange="toggleAddOwner()">
+              <option value="sole">Single Proprietor</option>
+              <option value="corp">Corporation / Partnership</option>
+            </select>
+          </div>
+
+          <div class="modal-field span-2" id="add-sole-fields">
+            <label>Owner Full Name (Last, First Middle)</label>
+            <input type="text" id="add-owner-name" placeholder="Last name, First name Middle name">
+          </div>
+
+          <div class="modal-field span-2" id="add-corp-field" style="display:none;">
+            <label>Registered Business Name</label>
+            <input type="text" id="add-corp-name" placeholder="Full registered name">
+          </div>
+
+          <div class="modal-field">
+            <label>Contact Number</label>
+            <input type="tel" id="add-contact" placeholder="09XX XXX XXXX">
+          </div>
+
+          <div class="modal-field">
+            <label>Business / Trade Name</label>
+            <input type="text" id="add-business-name" placeholder="Business name">
+          </div>
+
+          <div class="modal-field span-2">
+            <label>Business Address</label>
+            <input type="text" id="add-address" placeholder="Street address, building, unit">
+          </div>
+
+          <div class="modal-field">
+            <label>Barangay</label>
+            <input type="text" id="add-barangay" placeholder="Barangay name">
+          </div>
+
+          <div class="modal-field">
+            <label>Line of Business</label>
+            <input type="text" id="add-lob" placeholder="e.g. Sari-Sari Store, Restaurant…">
+          </div>
+
+          <div class="modal-field span-2">
+            <label>Attachments</label>
+            <input type="text" id="add-attachments" placeholder="Document link, file name, reference number (optional)">
+          </div>
+
+          <div class="modal-field span-2">
+            <label>Remarks</label>
+            <textarea id="add-remarks" placeholder="Optional remarks"></textarea>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-sm btn-outline" onclick="closeAddModal()">Cancel</button>
+        <button class="btn-sm btn-dark" id="add-btn" onclick="saveAdd()">Add entry</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report Modal -->
+  <div class="modal-overlay" id="report-modal" style="display:none;" onclick="closeReportModal(event)">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:460px;">
+      <div class="modal-header">
+        <span class="modal-title">Generate Report</span>
+        <button class="modal-close" onclick="closeReportModal()">×</button>
+      </div>
+      <div class="modal-body">
+
+        <div class="modal-section">
+          <div class="modal-section-title">Report Type</div>
+          <div class="report-type-grid">
+            <button class="report-type-btn active" onclick="selectReportType(this, 'today')" id="rtype-today">
+              <span class="rtype-icon">📅</span>
+              <span class="rtype-label">Today</span>
+              <span class="rtype-desc">Current day's applications</span>
+            </button>
+            <button class="report-type-btn" onclick="selectReportType(this, 'range')" id="rtype-range">
+              <span class="rtype-icon">📆</span>
+              <span class="rtype-label">Date Range</span>
+              <span class="rtype-desc">From date A to date B</span>
+            </button>
+            <button class="report-type-btn" onclick="selectReportType(this, 'full')" id="rtype-full">
+              <span class="rtype-icon">📋</span>
+              <span class="rtype-label">Full Report</span>
+              <span class="rtype-desc">All records on file</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-section" id="report-date-section" style="display:none;">
+          <div class="modal-section-title">Date Range</div>
+          <div class="date-range-row">
+            <div class="modal-field" style="margin-bottom:0;">
+              <label>From</label>
+              <input type="date" id="report-date-from">
+            </div>
+            <div class="modal-field" style="margin-bottom:0;">
+              <label>To</label>
+              <input type="date" id="report-date-to">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-section" style="margin-bottom:0;padding-bottom:0;border-bottom:none;">
+          <div class="report-preview-note" id="report-preview-note">
+            Generates today's report — statistics summary followed by applicants grouped by status, with full audit trail per entry.
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn-sm btn-outline" onclick="closeReportModal()">Cancel</button>
+        <button class="btn-sm btn-dark" id="generate-btn" onclick="generateReport()">
+          <span id="generate-text">Generate &amp; Print</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div class="modal-overlay" id="change-pw-modal" style="display:none;" onclick="closeChangePasswordModal(event)">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:400px;">
+      <div class="modal-header">
+        <span class="modal-title">Change Password</span>
+        <button class="modal-close" onclick="closeChangePasswordModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section" style="margin-bottom:0;padding-bottom:0;border-bottom:none;">
+          <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px; padding:10px 12px; background:var(--bg); border-radius:7px; border:0.5px solid var(--border-light);">
+            Changing password for <strong id="cpw-username-label">—</strong>
+          </div>
+
+          <div class="modal-field">
+            <label>Current Password</label>
+            <div style="position:relative;">
+              <input type="password" id="cpw-current" placeholder="Enter current password" autocomplete="current-password">
+              <button type="button" onclick="togglePwVisibility('cpw-current', this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-faint);font-size:12px;padding:2px 4px;">Show</button>
+            </div>
+          </div>
+
+          <div class="modal-field">
+            <label>New Password</label>
+            <div style="position:relative;">
+              <input type="password" id="cpw-new" placeholder="Enter new password" autocomplete="new-password" oninput="checkPwStrength(this.value)">
+              <button type="button" onclick="togglePwVisibility('cpw-new', this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-faint);font-size:12px;padding:2px 4px;">Show</button>
+            </div>
+            <div style="margin-top:6px; display:flex; gap:4px;" id="cpw-strength-bars">
+              <div id="cpw-bar-1" style="height:3px;flex:1;border-radius:2px;background:var(--border);transition:background 0.2s;"></div>
+              <div id="cpw-bar-2" style="height:3px;flex:1;border-radius:2px;background:var(--border);transition:background 0.2s;"></div>
+              <div id="cpw-bar-3" style="height:3px;flex:1;border-radius:2px;background:var(--border);transition:background 0.2s;"></div>
+              <div id="cpw-bar-4" style="height:3px;flex:1;border-radius:2px;background:var(--border);transition:background 0.2s;"></div>
+            </div>
+            <div id="cpw-strength-label" style="font-size:10.5px;color:var(--text-faint);margin-top:4px;"></div>
+          </div>
+
+          <div class="modal-field">
+            <label>Confirm New Password</label>
+            <div style="position:relative;">
+              <input type="password" id="cpw-confirm" placeholder="Re-enter new password" autocomplete="new-password">
+              <button type="button" onclick="togglePwVisibility('cpw-confirm', this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-faint);font-size:12px;padding:2px 4px;">Show</button>
+            </div>
+          </div>
+
+          <div id="cpw-error" style="font-size:12px;color:#e53935;min-height:18px;margin-top:4px;"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-sm btn-outline" onclick="closeChangePasswordModal()">Cancel</button>
+        <button class="btn-sm btn-dark" id="cpw-save-btn" onclick="saveChangePassword()">Update Password</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" style="display:none;"></div>
+
+  <script src="../config.js"></script>
+  <script src="scripts/dashboard.js"></script>
+</body>
+</html>
