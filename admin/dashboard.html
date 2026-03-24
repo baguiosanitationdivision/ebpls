@@ -1228,23 +1228,21 @@
       const entry     = allEntries.find(e => e._rowIndex === rowToSave);
       const oldStatus = entry ? (entry['Status'] || '') : '';
 
-      // Determine which audit timestamps to set
-      // Only set a timestamp when the status *changes* into a new category
+      // Audit timestamp logic:
+      // reviewedAt — stamped on first status change (including direct-to-Approved)
+      // approvedAt — stamped/updated every time status becomes Approved
       const now = new Date().toISOString();
-      const meta = getStatusMeta(newStatus);
 
       let reviewedAt = entry ? (entry['Reviewed At'] || '') : '';
       let approvedAt = entry ? (entry['Approved At'] || '') : '';
 
-      if (newStatus && newStatus !== oldStatus && meta) {
-        if (meta.setsTimestamp === 'reviewedAt' && !reviewedAt) {
+      if (newStatus && newStatus !== oldStatus) {
+        // Stamp reviewedAt on first ever status change
+        if (!reviewedAt) {
           reviewedAt = now;
         }
-        if (meta.setsTimestamp === 'approvedAt' && !approvedAt) {
-          approvedAt = now;
-        }
-        // If re-approved after being un-approved (edge case), allow override:
-        if (meta.setsTimestamp === 'approvedAt' && newStatus === 'Approved') {
+        // Stamp approvedAt whenever Approved is set
+        if (newStatus === 'Approved') {
           approvedAt = now;
         }
       }
